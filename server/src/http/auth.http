@@ -1,0 +1,97 @@
+###
+POST http://localhost:5000/api/auth/is-exists
+Content-Type: application/json
+
+{
+  "data": "test"
+}
+
+### Register ✅
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "arridhaamrad@gmail.com",
+  "username": "arridha2108",
+  "password": "123456",
+  "fullName": "Arridha Amrad",
+  "birthDay": "08 November 1994"
+}
+
+### Email confirmation ✅
+PUT http://localhost:5000/api/auth/verify-email
+Content-Type: application/json
+
+{
+  "verificationCode": "375313",
+  "email": "arridhaamrad@gmail.com"
+}
+
+
+### Login
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+  "identity": "amrad08",
+  "password": "ariGanteng08"
+}
+
+### Logout
+POST  http://localhost:5000/api/auth/logout
+
+
+### Forgot Password
+POST http://localhost:5000/api/auth/forgot-password
+Content-Type: application/json
+
+{
+  "email": "arridhaamrad@gmail.com"
+}
+
+
+### Reset Password
+POST http://localhost:5000/api/auth/reset-password/NRVQ_RqMdenXcH8kImGEoMegfFAQsinQQ3+7nSQHH8lskLzRFNM3rcsx6J+HR8eecO5EysrWv6vm6wC_RU9e9lCJ9o7Q9UsWxgirekUR7LiRLcp68hxPLK6DK7PXFaahOjn6Y3RLR3ZIyLdStrfPe6kI_nu+s371_u4SaAYwRTIksShwRmUE2dsvWZ2P+9lj6H1d8leQxBh_MDscfy5+yt5jZFWOenlHIweYfHLtLF7OFR+gv8WV0vyIqNTQ5Dw5CmLea2ugrQfduBcB693BCca3XTosyK5MAEO7uA4H_6ZBtEPisFOy94Ou8sPhSFWuJPp24pyhTDgJBPsArSNLglsB9d9u1gC1FpKMMx0S64OvGgCdLopeqBRDEEgl1r9XhO6tgRvXk4kt0+twYeIjYLRL8w+u9ygYI3V+WQ5fnFnd5e6OvGYNwvc3FCDcpd3e08JkAutFHKqB8rGUwO8XfcdpH2WwF7iVeZToqIaTkvijngVuPKVhy03yS5IBVmHxDAcHviFA8S4fmJ6tscL8jYlCxBN7GKQ4cylOln5bNu5J3xnkXKmzsCZ7T2f_1w42NXGjSG+gOSOPZPiGh_0eV0ByszXSZ4gBJ269WbVajrMAbgv4smiGH6kAJWQ0stU22hV0hvbZ8DH8Mle09sSi2TUJIXPNjDnA8G9Mw5WrmO59X+_qsq1QUKZ4OvsD+GoBl2xSjsQvDSPaglCBDhqShnn_T_OuQkZL4itH_+3hbDNBWgZ57LZdHoH+6j7AUDRal3rFxpdSrSr1bZxjkB6HugoRl9VnR2Yfn0QT6n4SJ6_zNYt82aOoiIwno+JvFp_a+Ic1LQO7QR+1ZgH12dKW3y9R+E5NtYhmr3kBEAfIDiGipe_TkRizZeQPI8iHv469gmplU1q78WIKhDni59SaKQpiGbIYFZrXk7T6EjJrvycDCpDcLdBEchOClrb_6bMssEzyoitukr_qa0iXEfD6YpexH+dx0pIg9sRKSpnedFYJL6QKhiLFp+HDvURJCZV0a49KZr5RMEIHQxICRYE+YEWZTQwZ5gVX+qytdyRtie5sKvAIE46uNXwGdAE9fyfs6TwM4O0PdmMdNx7Apcpi2R2BEoX1GQO4CcjoZj_G4NPCJFXbkJ3Ww_phVVReXy1NykkNYH+CuIPdtEP+SmBR9j73BRd6PpoDuQDEmtNRV9M=
+Content-Type: application/json
+
+{
+  "password": "adnansaid"
+}
+
+
+### Refresh Token
+GET http://localhost:5000/api/auth/refresh-token
+
+
+### Change Password
+POST http://localhost:5000/api/user/change-password
+Content-Type: application/json
+
+{
+  "oldPassword": "Iambillionaire99",
+  "newPassword": "ariGanteng08"
+}
+
+
+### Me
+GET http://localhost:5000/api/user/me
+
+
+### Add User details
+POST http://localhost:5000/api/user/update-user-data
+Content-Type: application/json
+
+{
+  "bio": "I'm software engineer",
+  "website": "ai.com",
+  "phoneNumber": "0000",
+  "followers": 0
+}
+
+
+### FIND USER BY USERNAME
+GET http://localhost:5000/api/user/amrad.marks21
+
+
+###
+GET http://localhost:5000/api/user/test
