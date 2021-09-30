@@ -17,15 +17,17 @@ import {
   PostFollowersFollowingsArea,
 } from "./userDetails.element";
 import { ModalBackground2 } from "../modal/settings/settingsModal.element";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/Store";
 import { ProfilePageData } from "../../../dto/UserDTO";
 
 interface ProfileDataProps {
   data: ProfilePageData;
+  isAuthenticatedUser: boolean;
 }
 
-const ProfileData: React.FC<ProfileDataProps> = ({ data }) => {
+const ProfileData: React.FC<ProfileDataProps> = ({
+  data,
+  isAuthenticatedUser,
+}) => {
   const [isShow, setShow] = useState(false);
   const myRef = useRef();
 
@@ -49,8 +51,6 @@ const ProfileData: React.FC<ProfileDataProps> = ({ data }) => {
     return () => document.removeEventListener("keydown", keyPress);
   }, [keyPress]);
 
-  const { authenticatedUser } = useSelector((state: RootState) => state.auth);
-
   return (
     <>
       <ModalBackground2 isShow={isShow} ref={myRef} onClick={ToggleModal}>
@@ -59,7 +59,7 @@ const ProfileData: React.FC<ProfileDataProps> = ({ data }) => {
 
       <ProfileFirstLine>
         <ProfileUsername>{data.username}</ProfileUsername>
-        {data.isAuthenticatedUser && (
+        {isAuthenticatedUser && (
           <>
             <EditProfileButton to="/accounts/edit">
               Edit Profile

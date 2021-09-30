@@ -16,7 +16,6 @@ export const findUserByUsername = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    console.log('username : ', req.params.username);
     const user = await UserService.findUserAndPostsByUsername(
       req.params.username,
     );
@@ -102,22 +101,24 @@ export const uploadAvatar = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
+    const userId = req.userId;
     const file = req.files?.avatarFile as UploadedFile;
     if (!file) {
       return next(new Exception(HTTP_CODE.BAD_REQUEST, 'image is required'));
+    }
+    if (file.size >= 1000000) {
+      return next(new Exception(HTTP_CODE.BAD_REQUEST, 'file is too large'));
     }
     if (
       file.mimetype === 'image/jpeg' ||
       file.mimetype === 'image/png' ||
       file.mimetype === 'image/jpg'
     ) {
-      const { errors, valid, uploadResult } = await uploadToCloudinary(
-        file,
-        true,
-      );
-      if (!valid) {
-        res.status(400).json(errors);
-      } else {
+      const uploadResult = await uploadToCloudinary(file, true);
+      if (uploadResult) {
+        await UserService.findUserByIdAndUpdate(userId, {
+          imageURL: uploadResult.secure_url,
+        });
         res.status(200).send(uploadResult?.secure_url);
         fs.unlinkSync(file.tempFilePath);
       }

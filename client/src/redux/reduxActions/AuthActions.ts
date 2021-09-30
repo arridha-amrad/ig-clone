@@ -27,6 +27,27 @@ const dispatchMessage = (
   dispatch(messageActions.setMessage(message, type));
 };
 
+export const uploadAvatar =
+  (formData: FormData) => async (dispatch: Dispatch<AuthActionsType>) => {
+    dispatch({ type: "LOADING_AUTH" });
+    try {
+      const res = await axiosInstance.post("/user/upload-avatar", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log("res data : ", res.data);
+      dispatch({
+        type: "UPLOAD_AVATAR",
+        payload: res.data,
+      });
+    } catch (err) {
+      console.log(err);
+    } finally {
+      dispatch({ type: "STOP_LOADING_AUTH" });
+    }
+  };
+
 export const updateUserData =
   (data: Partial<AuthenticatedUserData>) =>
   async (dispatch: Dispatch<AuthMessageAction>) => {

@@ -24,6 +24,6 @@ router.post(
 
 router.get('/:username', userController.findUserByUsername);
 
-router.post('/upload-avatar', userController.uploadAvatar);
+router.post('/upload-avatar', verifyAccessToken, userController.uploadAvatar);
 
 export default router;

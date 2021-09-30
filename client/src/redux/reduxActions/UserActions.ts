@@ -23,29 +23,6 @@ const dispatchMessage = (
   dispatch(setMessage(message, type));
 };
 
-const dummy = (isOk: boolean) => {
-  return new Promise((resolve, reject) => {
-    if (isOk) {
-      resolve("hello world");
-    } else {
-      reject("something wrong");
-    }
-  });
-};
-
-export const testFx = () => async (dispatch: Dispatch<UserMessageAction>) => {
-  dispatch({ type: "LOADING_USER" });
-  try {
-    const res = await dummy(true);
-    console.log("dummy res : ", res);
-    return res;
-  } catch (err: any) {
-    console.log(err);
-  } finally {
-    dispatch({ type: "STOP_LOADING_USER" });
-  }
-};
-
 export const changePassword =
   (data: ChangePasswordData) =>
   async (dispatch: Dispatch<UserMessageAction>) => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import AppBar from "../../appBar/AppBar";
 import AccountData from "../details/UserDetails";
 import ProfileMenus from "../menu/Menu";
@@ -12,10 +12,12 @@ import { useLocation } from "react-router";
 import { useDispatch } from "react-redux";
 import { findUserAndPostsByUsername } from "../../../redux/reduxActions/UserActions";
 import { ProfilePageData } from "../../../dto/UserDTO";
+import { uploadAvatar } from "../../../redux/reduxActions/AuthActions";
 
 interface UserContainerProps {}
 
 const UserContainer: React.FC<UserContainerProps> = ({ children }) => {
+  const [isUpdate, setIsUpdate] = useState(false);
   const [data, setData] = useState<ProfilePageData>({
     bio: "",
     username: "",
@@ -35,34 +37,35 @@ const UserContainer: React.FC<UserContainerProps> = ({ children }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (location.pathname.split("/")[1] !== authenticatedUser?.username) {
-      dispatch(findUserAndPostsByUsername(location.pathname));
-      setData({
-        ...data,
-        bio: user?.bio ?? "",
-        username: user?.username ?? "",
-        fullName: user?.fullName ?? "",
-        isAuthenticatedUser: false,
-        totalFollowers: user?.followers ?? 0,
-        totalFollowings: user?.followings ?? 0,
-        totalPosts: 0,
-        website: user?.website ?? "",
-      });
-    } else {
-      setData({
-        ...data,
-        bio: authenticatedUser.bio,
-        username: authenticatedUser.username,
-        fullName: authenticatedUser.fullName,
-        isAuthenticatedUser: true,
-        totalFollowers: authenticatedUser.followers,
-        totalFollowings: authenticatedUser.followings,
-        website: authenticatedUser.website,
-        totalPosts: 0,
-      });
-    }
+    dispatch(findUserAndPostsByUsername(location.pathname));
+    setData({
+      ...data,
+      bio: user.bio,
+      username: user.username,
+      fullName: user.fullName,
+      isAuthenticatedUser: false,
+      totalFollowers: user.followers,
+      totalFollowings: user.followings,
+      totalPosts: 0,
+      website: user.website,
+      imageURL: user.imageURL,
+    });
+    setIsUpdate(false);
     // eslint-disable-next-line
   }, []);
+
+  const inputFileRef = useRef<HTMLInputElement>(null);
+
+  const openInputFile = () => {
+    inputFileRef.current?.click();
+  };
+  const handleImageChange = (e: any) => {
+    setIsUpdate(true);
+    const file = e.target?.files[0];
+    const formData = new FormData();
+    formData.append("avatarFile", file);
+    dispatch(uploadAvatar(formData));
+  };
   return (
     <>
       <AppBar />
@@ -70,11 +73,33 @@ const UserContainer: React.FC<UserContainerProps> = ({ children }) => {
       <ProfileContainer>
         <AccountHeader>
           <AccountWrapper>
-            <AvatarWrapper>
-              <AccountAvatar src="https://deadline.com/wp-content/uploads/2016/05/spongebob.jpg?w=600&h=383&crop=1" />
+            <AvatarWrapper
+              onClick={
+                data.username === authenticatedUser.username
+                  ? openInputFile
+                  : undefined
+              }
+            >
+              <AccountAvatar
+                src={isUpdate ? authenticatedUser.imageURL : data.imageURL}
+                alt="profile"
+              />
+              <input
+                ref={inputFileRef}
+                type="file"
+                name="avatarFile"
+                id="fileInput"
+                hidden={true}
+                onChange={handleImageChange}
+              />
             </AvatarWrapper>
             <AccountDataWrapper>
-              <AccountData data={data} />
+              <AccountData
+                isAuthenticatedUser={
+                  data.username === authenticatedUser.username
+                }
+                data={data}
+              />
             </AccountDataWrapper>
           </AccountWrapper>
 

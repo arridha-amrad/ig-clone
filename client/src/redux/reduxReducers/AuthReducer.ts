@@ -41,6 +41,14 @@ const AuthReducer = (
   action: AuthActionsType
 ): AuthState => {
   switch (action.type) {
+    case "UPLOAD_AVATAR":
+      return {
+        ...state,
+        authenticatedUser: {
+          ...state.authenticatedUser,
+          imageURL: action.payload,
+        },
+      };
     case "UPDATE_USER_DATA":
       return {
         ...state,
