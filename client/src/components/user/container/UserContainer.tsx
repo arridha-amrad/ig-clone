@@ -81,7 +81,11 @@ const UserContainer: React.FC<UserContainerProps> = ({ children }) => {
               }
             >
               <AccountAvatar
-                src={isUpdate ? authenticatedUser.imageURL : data.imageURL}
+                src={
+                  data.username === authenticatedUser.username
+                    ? authenticatedUser.imageURL
+                    : data.imageURL
+                }
                 alt="profile"
               />
               <input

@@ -1,0 +1,5 @@
+CommentOfPost
+
+- user
+- createdAt
+-

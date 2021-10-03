@@ -17,6 +17,8 @@ import UserRoutes from './routes/UserRoutes';
 import { errorMiddleware } from './middleware/ErrorMiddleware';
 import { createConnectionToDB } from './database/mongoDBInitializer';
 import expressFileUpload from 'express-fileupload';
+import PostRoutes from './routes/PostRoutes';
+import CommentOfPostRoutes from './routes/CommentOfPostRoutes';
 
 export const runServer = (): Application => {
   const app: Express = express();
@@ -28,8 +30,12 @@ export const runServer = (): Application => {
   ]);
   ``;
   app.use(expressFileUpload({ useTempFiles: true }));
+
   app.use('/api/auth', AuthRoutes);
   app.use('/api/user', UserRoutes);
+  app.use('/api/post', PostRoutes);
+  app.use('/api/comment', CommentOfPostRoutes);
+
   app.use(
     // eslint-disable-next-line
     (err: ExceptionType, req: Request, res: Response, _: NextFunction) => {

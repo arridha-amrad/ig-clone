@@ -1,5 +1,6 @@
 import { UploadApiResponse, v2 } from 'cloudinary';
 import { UploadedFile } from 'express-fileupload';
+import fs from "fs"
 
 const cloudinary = v2;
 
@@ -34,8 +35,8 @@ export const uploadToCloudinary = async (
     uploadResult = await cloudinary.uploader.upload(
       file.tempFilePath,
       {
-        width: 300,
-        height: 300,
+        width: 1000,
+        height: 1000,
         crop: 'thumb',
         gravity: 'face',
       },
@@ -48,5 +49,6 @@ export const uploadToCloudinary = async (
       },
     );
   }
+  fs.unlinkSync(file.tempFilePath)
   return uploadResult;
 };

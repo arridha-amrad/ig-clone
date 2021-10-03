@@ -120,7 +120,6 @@ export const uploadAvatar = async (
           imageURL: uploadResult.secure_url,
         });
         res.status(200).send(uploadResult?.secure_url);
-        fs.unlinkSync(file.tempFilePath);
       }
     } else {
       return next(new Exception(HTTP_CODE.BAD_REQUEST, 'file not supported'));

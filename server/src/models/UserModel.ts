@@ -46,7 +46,8 @@ const UserSchema = new mongoose.Schema<
     },
     imageURL: {
       type: String,
-      default: '',
+      default:
+        'https://res.cloudinary.com/heartcloud/image/upload/v1633075983/bm7hdlc82cyehr89t0va.jpg',
     },
     gender: {
       type: String,
