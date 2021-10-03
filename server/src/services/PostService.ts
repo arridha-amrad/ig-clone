@@ -24,7 +24,7 @@ export const findPosts = async (): Promise<IPostModel[]> => {
 };
 
 export const findPostByUserId = async (
-  userId: Schema.Types.ObjectId,
+  userId: string,
 ): Promise<IPostModel[]> => {
   return PostModel.find({ user: userId })
     .populate('likes', 'username')

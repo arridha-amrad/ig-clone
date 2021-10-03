@@ -3,7 +3,7 @@ import argon2 from 'argon2';
 import { AuthenticationStrategy, RequiredAuthAction } from '../enums/UserEnum';
 
 export interface IUserModel {
-  _id: Schema.Types.ObjectId;
+  _id: Schema.Types.ObjectId | string;
   username: string;
   fullName: string;
   email: string;
@@ -30,7 +30,7 @@ export interface IUserModel {
   jwtVersion: string;
 }
 
-const UserSchema = new mongoose.Schema<
+export const UserSchema = new mongoose.Schema<
   IUserModel,
   Model<IUserModel>,
   IUserModel

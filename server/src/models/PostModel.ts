@@ -2,9 +2,9 @@ import mongoose, { Schema, Model } from 'mongoose';
 
 export interface IPostModel {
   _id: Schema.Types.ObjectId;
-  user: Schema.Types.ObjectId;
-  likes: [Schema.Types.ObjectId];
-  comments: [Schema.Types.ObjectId];
+  user: string;
+  likes: [string];
+  comments: [string];
   createdAt: Date;
   updatedAt: Date;
   // provided in req.body
@@ -12,22 +12,22 @@ export interface IPostModel {
   description: string;
 }
 
-const PostSchema = new Schema<IPostModel, Model<IPostModel>, IPostModel>(
+export const PostSchema = new Schema<IPostModel, Model<IPostModel>, IPostModel>(
   {
     user: {
-      type: Schema.Types.ObjectId,
+      type: String,
       ref: 'User',
     },
     comments: [
       {
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: 'CommentOfPost',
         default: [],
       },
     ],
     likes: [
       {
-        type: Schema.Types.ObjectId,
+        type: String,
         ref: 'User',
         default: [],
       },

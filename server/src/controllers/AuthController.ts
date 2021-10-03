@@ -87,7 +87,7 @@ export const registerHandler = async (
     const verificationData: IVerificationModel = {
       code: verificationCode,
       email,
-      user: savedUser._id,
+      user: savedUser._id as string,
     };
     await VerificationServices.save(verificationData);
     const emailContent: VerificationEmailContent = {

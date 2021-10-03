@@ -3,7 +3,6 @@ import { UploadedFile } from 'express-fileupload';
 import { HTTP_CODE } from '../enums/HTTP_CODE';
 import Exception from '../exceptions/Exception';
 import ServerErrorException from '../exceptions/ServerErrorException';
-import { IPostModel } from '../models/PostModel';
 import { responseSuccess } from '../ServerResponse';
 import * as PostService from '../services/PostService';
 import { uploadToCloudinary } from '../utils/FileUploader';
@@ -23,13 +22,12 @@ export const createPost = async (
         file as UploadedFile,
         false,
       );
-      const post: IPostModel = {
+      const newPost = await PostService.save({
         ...req.body,
         imageURL: uploadResult?.secure_url,
         description,
         user: userId,
-      };
-      const newPost = await PostService.save(post);
+      });
       return responseSuccess(res, HTTP_CODE.CREATED, newPost);
     } else {
       next(new Exception(HTTP_CODE.BAD_REQUEST, 'image file is required'));
@@ -63,7 +61,7 @@ export const getPostsByUsername = async (
   try {
     const user = await UserService.findUserByUsernameOrEmail(username);
     if (user) {
-      const posts = await PostService.findPostByUserId(user._id);
+      const posts = await PostService.findPostByUserId(user._id as string);
       return responseSuccess(res, HTTP_CODE.OK, posts);
     } else {
       res.status(400).send('user not found');

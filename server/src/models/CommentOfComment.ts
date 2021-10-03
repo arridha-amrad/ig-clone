@@ -1,42 +1,48 @@
 import mongoose from 'mongoose';
 
 export interface ICommentOfCommentModel {
-  _id: mongoose.Schema.Types.ObjectId;
-  user: mongoose.Schema.Types.ObjectId;
-  likes: [mongoose.Schema.Types.ObjectId];
-  comment: mongoose.Schema.Types.ObjectId;
-  post: mongoose.Schema.Types.ObjectId;
+  _id: mongoose.Schema.Types.ObjectId | string;
+  user: string;
+  likes: [string];
+  comment: string;
+  post: string;
   createdAt: Date;
   updatedAt: Date;
   content: string;
 }
 
-const CommentOfCommentSchema = new mongoose.Schema<
+export const CommentOfCommentSchema = new mongoose.Schema<
   ICommentOfCommentModel,
   mongoose.Model<ICommentOfCommentModel>,
   ICommentOfCommentModel
 >(
   {
     user: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       ref: 'User',
     },
     likes: [
       {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: 'User',
         default: [],
       },
     ],
     comment: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       ref: 'CommentOfPost',
     },
     post: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       ref: 'Post',
     },
     content: { type: String },
   },
   { timestamps: true },
 );
+
+const CommentOfCommentModel = mongoose.model<ICommentOfCommentModel>(
+  'CommentOfComment',
+  CommentOfCommentSchema,
+);
+export default CommentOfCommentModel;

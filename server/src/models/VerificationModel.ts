@@ -1,7 +1,7 @@
 import mongoose, { Model, Schema } from 'mongoose';
 
 export interface IVerificationModel {
-  user: Schema.Types.ObjectId;
+  user: string;
   code: string;
   email: string;
   createdAt?: Date;
@@ -9,13 +9,13 @@ export interface IVerificationModel {
   isComplete?: boolean;
 }
 
-const VerificationSchema = new mongoose.Schema<
+export const VerificationSchema = new mongoose.Schema<
   IVerificationModel,
   Model<IVerificationModel>,
   IVerificationModel
 >(
   {
-    user: { type: Schema.Types.ObjectId, ref: 'User' },
+    user: { type: String, ref: 'User' },
     code: {
       type: String,
       required: true,

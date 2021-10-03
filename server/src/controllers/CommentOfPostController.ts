@@ -20,7 +20,7 @@ export const addComment = async (
         post: postId,
         user: req.userId,
       });
-      post.comments.push(newComment._id);
+      post.comments.push(newComment._id as string);
       const updatedPost = await post.save();
       res.status(200).send(updatedPost);
     } else {
