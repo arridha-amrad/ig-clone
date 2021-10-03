@@ -1,0 +1,455 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2021-10-03T11:07:33.423Z",
+  "__export_source": "insomnia.desktop.app:v2021.5.3",
+  "resources": [
+    {
+      "_id": "req_8e535a5949bc4287b9c15431cae4915d",
+      "parentId": "fld_cfce2f05655e48df85fbca9ec7db5699",
+      "modified": 1633258907354,
+      "created": 1633258898414,
+      "url": "{{ _.baseURL }}/comment/615989cfdb04adcd8f5e48a8",
+      "name": "comment  - delete",
+      "description": "",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1633258898414,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_cfce2f05655e48df85fbca9ec7db5699",
+      "parentId": "wrk_7010d7b41f924a71a83d71d33c5550f8",
+      "modified": 1633011004845,
+      "created": 1633010804293,
+      "name": "ig clone",
+      "description": "",
+      "environment": { "baseURL": "http://localhost:5000/api" },
+      "environmentPropertyOrder": { "&": ["baseURL"] },
+      "metaSortKey": -1633010804293,
+      "_type": "request_group"
+    },
+    {
+      "_id": "wrk_7010d7b41f924a71a83d71d33c5550f8",
+      "parentId": null,
+      "modified": 1626066934326,
+      "created": 1626066934326,
+      "name": "Insomnia",
+      "description": "",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
+      "_id": "req_0ddafa3468d241a2a13ccd4be0b2c1ba",
+      "parentId": "fld_cfce2f05655e48df85fbca9ec7db5699",
+      "modified": 1633258802923,
+      "created": 1633258529896,
+      "url": "{{ _.baseURL }}/comment/615989cfdb04adcd8f5e48a8",
+      "name": "comment - updateComment",
+      "description": "",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"content\": \"good post updated 2\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_ed897b288d854034b8513666fde4adad"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1633258529971,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_613507b7d6e541e187c5393db47d93fd",
+      "parentId": "fld_cfce2f05655e48df85fbca9ec7db5699",
+      "modified": 1633257975091,
+      "created": 1633171185805,
+      "url": "{{ _.baseURL }}/comment/add-comment/6156f1edfa2946b32c97f13d",
+      "name": "comment - add",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"content\": \"bad post\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_2d2f62d8173d4badb16d829655c51716"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1633257817698,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_5fa829f366e8406584caa9f206c3e24b",
+      "parentId": "fld_cfce2f05655e48df85fbca9ec7db5699",
+      "modified": 1633257820759,
+      "created": 1633257817648,
+      "url": "{{ _.baseURL }}/post/6156ecc247a2fa171a02efe3",
+      "name": "post - deletePost",
+      "description": "",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1633257817648,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_6506c8083a88439fa4390bb2dae4d2ee",
+      "parentId": "fld_cfce2f05655e48df85fbca9ec7db5699",
+      "modified": 1633257451927,
+      "created": 1633257232860,
+      "url": "{{ _.baseURL }}/post/6156ecc247a2fa171a02efe3",
+      "name": "post - updatePost",
+      "description": "",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"description\": \"first post updated\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_9391942e0a5342bbb9651311140cc218"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1633257232860,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_734601559f5e4fb8a883907e3b998028",
+      "parentId": "fld_cfce2f05655e48df85fbca9ec7db5699",
+      "modified": 1633257992434,
+      "created": 1633091918974,
+      "url": "{{ _.baseURL }}/post/arridha_amrad",
+      "name": "post - getPostsByUsername",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1633091918974,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_68cc777227fb44d2a1a694f36887b0ff",
+      "parentId": "fld_cfce2f05655e48df85fbca9ec7db5699",
+      "modified": 1633088365133,
+      "created": 1633088353931,
+      "url": "{{ _.baseURL }}/post/get-posts",
+      "name": "post - getPosts",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1633088354006,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_e5bf3ec9941f4c0b98df69399647b81e",
+      "parentId": "fld_cfce2f05655e48df85fbca9ec7db5699",
+      "modified": 1633087968979,
+      "created": 1633086491715,
+      "url": "{{ _.baseURL }}/post/create-post",
+      "name": "post - create",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "multipart/form-data",
+        "params": [
+          {
+            "name": "description",
+            "value": "second post",
+            "id": "pair_230dc20b8f3749939625823a7eb794d5"
+          },
+          {
+            "id": "pair_8f23195a63db465ebf2463916b61b86f",
+            "name": "file",
+            "value": "",
+            "description": "",
+            "type": "file",
+            "fileName": "/Users/arridha/Downloads/nature-3082832__480.jpeg"
+          }
+        ]
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "multipart/form-data",
+          "id": "pair_65e6f1c58cef4a20921c4183569660c1"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1633086491715,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_152fa8f8905b40e5bc572f2755d8ea43",
+      "parentId": "fld_cfce2f05655e48df85fbca9ec7db5699",
+      "modified": 1633011149664,
+      "created": 1633011097454,
+      "url": "{{ _.baseURL }}/user/me",
+      "name": "me",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1633011097454,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_367ce4ea784f448691c7c6b7f3e0bc29",
+      "parentId": "fld_cfce2f05655e48df85fbca9ec7db5699",
+      "modified": 1633258729707,
+      "created": 1633010883410,
+      "url": "http://localhost:5000/api/auth/login",
+      "name": "login",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"identity\": \"arridha_amrad\",\n\t\"password\": \"Iambillionaire99\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_2cb68bfb4c394526a298a458e8603ad1"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1633010883410,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_163b3aee189347ed90e1afbc7b59d2c9",
+      "parentId": "fld_cfce2f05655e48df85fbca9ec7db5699",
+      "modified": 1633011025523,
+      "created": 1633010838077,
+      "url": "{{ _.baseURL }}/auth/refresh-token",
+      "name": "refresh token",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1633010838077,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_a19f81a284274cd8ab5a52013b4ab676",
+      "parentId": "fld_cfce2f05655e48df85fbca9ec7db5699",
+      "modified": 1633075980686,
+      "created": 1633010590519,
+      "url": "http://localhost:5000/api/user/upload-avatar",
+      "name": "upload-avatar",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "multipart/form-data",
+        "params": [
+          {
+            "id": "pair_a23d5c1cb563464385e053ed377eedce",
+            "name": "avatarFile",
+            "value": "",
+            "description": "",
+            "type": "file",
+            "fileName": "/Users/arridha/Downloads/default-user-imge.jpeg"
+          }
+        ]
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "multipart/form-data",
+          "id": "pair_880844cb0c3b4112a5bc1c8a270a9f21"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1633010750849.5,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "env_e48c0864f26548e5a9440697089c811b10545515",
+      "parentId": "wrk_7010d7b41f924a71a83d71d33c5550f8",
+      "modified": 1626066934438,
+      "created": 1626066934438,
+      "name": "Base Environment",
+      "data": {},
+      "dataPropertyOrder": null,
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 1626066934438,
+      "_type": "environment"
+    },
+    {
+      "_id": "jar_e48c0864f26548e5a9440697089c811b10545515",
+      "parentId": "wrk_7010d7b41f924a71a83d71d33c5550f8",
+      "modified": 1633259091874,
+      "created": 1626066934442,
+      "name": "Default Jar",
+      "cookies": [
+        {
+          "key": "JSESSIONID",
+          "value": "88CD2560E0C84B6CCC6F4686E7635CCD",
+          "domain": "localhost",
+          "path": "/",
+          "httpOnly": true,
+          "hostOnly": true,
+          "creation": "2021-07-22T11:03:19.668Z",
+          "lastAccessed": "2021-07-29T15:40:13.206Z",
+          "id": "6871214474895364"
+        },
+        {
+          "key": "LOGIN_COOKIE",
+          "value": "KG5%2BpBeQWEKaiVxTWEYMpjTsmbqPRXPYEDyt3yshpiU9w9FJJPuCXoKz60JhKEp8cTihEJdfx4O%2Fy%2BW5MPZQ1DjQTB5FtP5SMhmEbzMJGYoxmJkMnPl%2BPI6jdT07sgPduUxZOaaQ2ZTQCxnB%2ByBoScfpQ1tnQ31doHt5AF4jr6Jj2mFXeZPo40MNrMQgpw5j8SdLye7m1%2FXWnU%2FBezPqk3GY6eHwzFqlddYmiMMx1NsGZ%2BGpYirt5hrElAdZ8qcMrKHrnPdP0%2B%2BHBcEZastOvayqGppBB%2FvYkEti%2FiYv78DniVH57Xb9sULC5BfmyEVm88KkuNKfB3tSfGEv9iJQ2H9VUd7R%2FD5CbtIsEFWNou3WN%2FuWWmDaQnetllzVKqwPjUHu4pHlOvkZ7vbbzdhwgIMDXIpE4Z53EVrKB6z177AokWr0IwelwJLgPMSQGBQ8IzNJQ5Dna7jqoQrDEuxOYGFxNsiuRff5dBm1oS8QrrVKS4EbvW%2B9fqYn3O%2FxFlLiFrw%2FAI92p3b9j5UN7G8EEX8EvuF8fxKWymYRBWf6IFvComAisFP7wVcJ02ZxZEFhBGc1Yv%2BuULlk0oAZeT6CqIUkHpOFXWJXi%2Fzx%2BzSL30ka%2FE3RG4jJiV5LMoCj8vNWq6wiF35qpiXCtRRzbE20Ja6MX4eWULko7uTYOF4pIQ9GQvJTELkWIjQzl%2BJ3kCNvCzeUNuJD4oYxftCuKq4Hw1yHozJKQ4Pjl2l7%2BnoaKEBMgUVAya1B9BwKgw5vXwYl2U%2FnEdoPXzoVtGM3sUt5W06oLcy0V6E3onhZtWV1GoNexRi9vwnE8iBxm8u71%2F7uNG13KaRGKQQAA3To1lJFXxKsMDC7hxzIcTEZtl%2Bf8NHE5XPFY%2BscGOkHx8aF1q1dk0X6mH8dTcfb1XhacH3wHoZNnWgpD7MjM0iiALxRrMRtIB3iVsW%2FZ6EtwzRqv3UIpT%2Fah6Pz3tztJMZpMQzI6LhheDeQvipUzs9t%2Bp5PfbAWxL9bX8w8xoTaRA3Qg8YXXII%2F8bLwhgZJ44syUuYQ5cErpeG9o2ux6BNeAkeli9flDZ9SdGECcaaEXzcWwqR0slJIoeWN4yBrJhchp7738nnZ5NSZXvS3OG2H8guYx%2F4Zoht5iq%2FzXLVvoZ0Gw6Xj6pBMmlueNkI32kgX8F%2FGj%2B1fUZTG0eOB%2FDZm%2FPJYXaFrwltwRuEysy5i1QBOStHc7evlx4rkIE8Br5jJiFKvun5211o%2F%2BJAYiUS26UX4lQdposeHw1BOHPdWcaQOMPOOMAk%2FPJrekDOkPqwVSn%2FvZqJ2e2J59x4WGvbVjSNfk27J7C%2BhyzanzG%2FY62dQXdouo43t1z4GMJwgd8qzBAJYMA%3D%3D",
+          "expires": "2021-10-08T11:04:51.000Z",
+          "maxAge": 432000,
+          "domain": "localhost",
+          "path": "/",
+          "httpOnly": true,
+          "extensions": ["SameSite=Lax"],
+          "hostOnly": true,
+          "creation": "2021-09-30T14:09:22.427Z",
+          "lastAccessed": "2021-10-03T11:04:51.863Z",
+          "id": "4577064316209474"
+        },
+        {
+          "key": "COOKIE_ID",
+          "value": "j%3A%2261554772236ff22adff1de63%22",
+          "expires": "2021-10-08T11:03:38.000Z",
+          "maxAge": 432000,
+          "domain": "localhost",
+          "path": "/",
+          "httpOnly": true,
+          "extensions": ["SameSite=Lax"],
+          "hostOnly": true,
+          "creation": "2021-09-30T14:09:22.428Z",
+          "lastAccessed": "2021-10-03T11:03:38.344Z",
+          "id": "8208334487449505"
+        }
+      ],
+      "_type": "cookie_jar"
+    },
+    {
+      "_id": "spc_0726b31dc0b6491aa603c0c9c89c886a",
+      "parentId": "wrk_7010d7b41f924a71a83d71d33c5550f8",
+      "modified": 1626066934327,
+      "created": 1626066934327,
+      "fileName": "Insomnia",
+      "contents": "",
+      "contentType": "yaml",
+      "_type": "api_spec"
+    }
+  ]
+}
