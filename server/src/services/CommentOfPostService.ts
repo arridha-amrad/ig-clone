@@ -8,3 +8,22 @@ export const save = async (
   const newComment = new CommentOfPostModel(data);
   return newComment.save();
 };
+
+export const findByIdAndUpdate = async (
+  commentId: string,
+  data: Partial<ICommentOfPostModel>,
+): Promise<ICommentOfPostModel> => {
+  return CommentOfPostModel.findByIdAndUpdate(
+    commentId,
+    {
+      ...data,
+    },
+    { new: true },
+  );
+};
+
+export const findByIdAndDelete = async (
+  commentId: string,
+): Promise<ICommentOfPostModel | null> => {
+  return CommentOfPostModel.findByIdAndDelete(commentId);
+};

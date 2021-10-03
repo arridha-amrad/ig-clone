@@ -18,7 +18,7 @@ export const findPosts = async (): Promise<IPostModel[]> => {
     .populate('user', 'username')
     .populate({
       path: 'comments',
-      populate: { path: 'user', select: 'username' },
+      populate: { path: 'user', select: 'username imageURL' },
     });
   return res;
 };

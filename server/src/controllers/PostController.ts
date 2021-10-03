@@ -81,10 +81,8 @@ export const updatePost = async (
 ): Promise<void> => {
   const postId = req.params.postId;
   try {
-    const result = await PostService.findPostByIdAndUpdate(
-      postId,
-      req.body.description,
-    );
+    const data = req.body;
+    const result = await PostService.findPostByIdAndUpdate(postId, { ...data });
     if (result) {
       return responseSuccess(res, HTTP_CODE.OK, result);
     }

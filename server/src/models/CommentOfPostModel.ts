@@ -2,10 +2,10 @@ import mongoose from 'mongoose';
 
 export interface ICommentOfPostModel {
   _id: mongoose.Schema.Types.ObjectId;
-  user: mongoose.Schema.Types.ObjectId;
+  user: mongoose.Schema.Types.ObjectId | string;
   likes: [mongoose.Schema.Types.ObjectId];
   comments: [mongoose.Schema.Types.ObjectId];
-  post: mongoose.Schema.Types.ObjectId;
+  post: mongoose.Schema.Types.ObjectId | string;
   content: string;
   createdAt: Date;
   updatedAt: Date;
