@@ -14,7 +14,7 @@ import cookieParser from 'cookie-parser';
 import { ExceptionType } from './interfacesAndTypes/ExceptionTypes';
 import AuthRoutes from './routes/AuthRoutes';
 import UserRoutes from './routes/UserRoutes';
-import { errorMiddleware } from './middleware/ErrorMiddleware';
+import { errorMiddleware } from './utils/ErrorMiddleware';
 import { createConnectionToDB } from './database/mongoDBInitializer';
 import expressFileUpload from 'express-fileupload';
 import PostRoutes from './routes/PostRoutes';

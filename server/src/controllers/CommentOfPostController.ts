@@ -5,6 +5,9 @@ import ServerErrorException from '../exceptions/ServerErrorException';
 import { responseSuccess } from '../ServerResponse';
 import * as CommentOfPostService from '../services/CommentOfPostService';
 import * as PostService from '../services/PostService';
+import * as NotificationService from '../services/NotificationService';
+import * as UserService from '../services/UserService';
+import { commentNotification } from '../templates/NotificationTemplates';
 
 export const addComment = async (
   req: Request,
@@ -12,16 +15,28 @@ export const addComment = async (
   next: NextFunction,
 ): Promise<void> => {
   const postId = req.params.postId;
+  const userId = req.userId;
   try {
+    const user = await UserService.findUserById(userId);
     const post = await PostService.findPostById(postId);
-    if (post) {
+    if (post && user) {
       const newComment = await CommentOfPostService.save({
         ...req.body,
         post: postId,
-        user: req.userId,
+        user: userId,
       });
       post.comments.push(newComment._id as string);
+
       const updatedPost = await post.save();
+
+      await NotificationService.save({
+        content: `${commentNotification(user.username, req.body.content)}`,
+        post: postId,
+        sender: userId,
+        receiver: post.user,
+        type: 'comment',
+      });
+
       res.status(200).send(updatedPost);
     } else {
       next(new Exception(HTTP_CODE.NOT_FOUND, 'post not found'));

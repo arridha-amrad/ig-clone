@@ -7,6 +7,10 @@ import {
   CommentOfPostSchema,
   ICommentOfPostModel,
 } from '../models/CommentOfPostModel';
+import {
+  INotificationModel,
+  NotificationSchema,
+} from '../models/NotificationModel';
 import { IPostModel, PostSchema } from '../models/PostModel';
 import { IUserModel, UserSchema } from '../models/UserModel';
 import {
@@ -25,6 +29,7 @@ export const createConnectionToDB = async (
     'CommentOfComment',
     CommentOfCommentSchema,
   );
+  mongoose.model<INotificationModel>('Notification', NotificationSchema);
   return mongoose.connect(uri, {});
 };
 

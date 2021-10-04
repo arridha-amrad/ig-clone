@@ -2,6 +2,7 @@ import { Schema, Document } from 'mongoose';
 import PostModel, { IPostModel } from '../models/PostModel';
 
 type MongoDBPostModel =
+  // eslint-disable-next-line
   | (Document<any, any, IPostModel> &
       IPostModel & {
         _id: Schema.Types.ObjectId;
@@ -15,10 +16,10 @@ export const save = async (data: IPostModel): Promise<IPostModel> => {
 
 export const findPosts = async (): Promise<IPostModel[]> => {
   const res = PostModel.find()
-    .populate('user', 'username')
+    .populate('user', 'username imageURL')
     .populate({
       path: 'comments',
-      populate: { path: 'user', select: 'username imageURL' },
+      populate: { path: 'user', select: 'username imageURL updatedAt' },
     });
   return res;
 };

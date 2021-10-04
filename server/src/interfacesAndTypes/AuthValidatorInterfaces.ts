@@ -1,9 +1,9 @@
 export interface IFieldError {
-   field: string;
-   message: string;
+  field: string;
+  message: string;
 }
 
 export interface IValidationResult {
-   errors: IFieldError[];
-   valid: boolean;
+  errors: IFieldError[];
+  valid: boolean;
 }

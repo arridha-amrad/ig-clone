@@ -121,11 +121,12 @@ export function verifyAccessToken(
   }
   jwt.verify(token, publicKey, accessTokenVerifyOptions, (err, payload) => {
     if (err) {
-      return next(new Exception(HTTP_CODE.UNAUTHORIZED, err.message));
+      next(new Exception(HTTP_CODE.UNAUTHORIZED, err.message));
+    } else {
+      const result = payload as AccessTokenPayloadType;
+      req.userId = result.userId;
+      next();
     }
-    const result = payload as AccessTokenPayloadType;
-    req.userId = result.userId;
-    next();
   });
 }
 

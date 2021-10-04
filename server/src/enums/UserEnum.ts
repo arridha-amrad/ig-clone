@@ -1,11 +1,11 @@
 export enum RequiredAuthAction {
-   null = 'null',
-   emailVerification = 'emailVerification',
-   resetPassword = 'resetPassword',
+  null = 'null',
+  emailVerification = 'emailVerification',
+  resetPassword = 'resetPassword',
 }
 
 export enum AuthenticationStrategy {
-   default = 'default',
-   google = 'google',
-   facebook = 'facebook',
+  default = 'default',
+  google = 'google',
+  facebook = 'facebook',
 }

@@ -7,6 +7,7 @@ import { responseSuccess } from '../ServerResponse';
 import * as PostService from '../services/PostService';
 import { uploadToCloudinary } from '../utils/FileUploader';
 import * as UserService from '../services/UserService';
+import fs from 'fs';
 
 export const createPost = async (
   req: Request,
@@ -14,21 +15,21 @@ export const createPost = async (
   next: NextFunction,
 ): Promise<void> => {
   const userId = req.userId;
-  const file = req.files?.file;
+  const imageFile = req.files?.imageFile as UploadedFile;
   const { description } = req.body;
   try {
-    if (file) {
-      const uploadResult = await uploadToCloudinary(
-        file as UploadedFile,
-        false,
-      );
-      const newPost = await PostService.save({
-        ...req.body,
-        imageURL: uploadResult?.secure_url,
-        description,
-        user: userId,
-      });
-      return responseSuccess(res, HTTP_CODE.CREATED, newPost);
+    if (imageFile) {
+      const uploadResult = await uploadToCloudinary(imageFile, false);
+      if (uploadResult) {
+        const newPost = await PostService.save({
+          ...req.body,
+          imageURL: uploadResult?.secure_url,
+          description,
+          user: userId,
+        });
+        fs.unlinkSync(imageFile.tempFilePath);
+        return responseSuccess(res, HTTP_CODE.CREATED, newPost);
+      }
     } else {
       next(new Exception(HTTP_CODE.BAD_REQUEST, 'image file is required'));
     }
