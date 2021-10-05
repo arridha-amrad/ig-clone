@@ -1,6 +1,15 @@
 import CommentOfPostModel, {
   ICommentOfPostModel,
 } from '../models/CommentOfPostModel';
+import { Document, Schema } from "mongoose"
+
+type MongoDBCommentOfPostModel =
+  // eslint-disable-next-line
+  | (Document<any, any, ICommentOfPostModel> &
+    ICommentOfPostModel & {
+      _id: Schema.Types.ObjectId;
+    })
+  | null;
 
 export const save = async (
   data: ICommentOfPostModel,
@@ -27,3 +36,9 @@ export const findByIdAndDelete = async (
 ): Promise<ICommentOfPostModel | null> => {
   return CommentOfPostModel.findByIdAndDelete(commentId);
 };
+
+export const findCommentById = async (
+  commentId: string
+): Promise<MongoDBCommentOfPostModel> => {
+  return CommentOfPostModel.findById(commentId)
+}

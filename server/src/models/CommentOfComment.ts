@@ -3,9 +3,8 @@ import mongoose from 'mongoose';
 export interface ICommentOfCommentModel {
   _id: mongoose.Schema.Types.ObjectId | string;
   user: string;
-  likes: [string];
+  likes: string[];
   comment: string;
-  post: string;
   createdAt: Date;
   updatedAt: Date;
   content: string;
@@ -31,10 +30,6 @@ export const CommentOfCommentSchema = new mongoose.Schema<
     comment: {
       type: String,
       ref: 'CommentOfPost',
-    },
-    post: {
-      type: String,
-      ref: 'Post',
     },
     content: { type: String },
   },

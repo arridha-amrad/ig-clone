@@ -58,7 +58,7 @@ export const updateComment = async (
       req.params.commentId,
       data,
     );
-    return responseSuccess(res, HTTP_CODE.OK, result);
+    res.status(200).send(result)
   } catch (err) {
     console.log(err);
     next(new ServerErrorException());

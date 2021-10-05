@@ -19,6 +19,7 @@ import { createConnectionToDB } from './database/mongoDBInitializer';
 import expressFileUpload from 'express-fileupload';
 import PostRoutes from './routes/PostRoutes';
 import CommentOfPostRoutes from './routes/CommentOfPostRoutes';
+import CommentOfCommentRoutes from "./routes/CommentOfCommentRoutes"
 
 export const runServer = (): Application => {
   const app: Express = express();
@@ -35,6 +36,7 @@ export const runServer = (): Application => {
   app.use('/api/user', UserRoutes);
   app.use('/api/post', PostRoutes);
   app.use('/api/comment', CommentOfPostRoutes);
+  app.use('/api/coc', CommentOfCommentRoutes)
 
   app.use(
     // eslint-disable-next-line

@@ -15,11 +15,26 @@ export const save = async (data: IPostModel): Promise<IPostModel> => {
 };
 
 export const findPosts = async (): Promise<IPostModel[]> => {
-  const res = PostModel.find()
+  const res = PostModel.find({}, null, { sort: '-createdAt' })
     .populate('user', 'username imageURL')
     .populate({
       path: 'comments',
-      populate: { path: 'user', select: 'username imageURL updatedAt' },
+      populate: [
+        {
+          path: 'user',
+          select: 'username imageURL updatedAt'
+        },
+        {
+          path: 'comments',
+          select: 'content likes createdAt',
+          populate: (
+            {
+              path: 'user',
+              select: 'username imageURL'
+            }
+          )
+        }
+      ]
     });
   return res;
 };

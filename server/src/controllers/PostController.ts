@@ -67,7 +67,7 @@ export const createPost = async (
           user: userId,
         });
         fs.unlinkSync(imageFile.tempFilePath);
-        return responseSuccess(res, HTTP_CODE.CREATED, newPost);
+        res.status(200).send(newPost)
       }
     } else {
       next(new Exception(HTTP_CODE.BAD_REQUEST, 'image file is required'));
@@ -85,7 +85,7 @@ export const getPosts = async (
 ): Promise<void> => {
   try {
     const posts = await PostService.findPosts();
-    return responseSuccess(res, HTTP_CODE.OK, posts);
+    res.status(200).send(posts)
   } catch (err) {
     console.log(err);
     next(new ServerErrorException());
@@ -102,7 +102,7 @@ export const getPostsByUsername = async (
     const user = await UserService.findUserByUsernameOrEmail(username);
     if (user) {
       const posts = await PostService.findPostsByUserId(user._id as string);
-      return responseSuccess(res, HTTP_CODE.OK, posts);
+      res.status(200).send(posts)
     } else {
       res.status(400).send('user not found');
     }
@@ -122,7 +122,7 @@ export const updatePost = async (
     const data = req.body;
     const result = await PostService.findPostByIdAndUpdate(postId, { ...data });
     if (result) {
-      return responseSuccess(res, HTTP_CODE.OK, result);
+      res.status(200).send(result)
     }
   } catch (err) {
     console.log(err);

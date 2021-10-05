@@ -3,13 +3,13 @@ import mongoose, { Schema, Model } from 'mongoose';
 export interface IPostModel {
   _id: Schema.Types.ObjectId;
   user: string;
+  imageURL: string;
+  description: string;
+  location?: string
   likes: string[];
   comments: string[];
   createdAt: Date;
   updatedAt: Date;
-  // provided in req.body
-  imageURL: string;
-  description: string;
 }
 
 export const PostSchema = new Schema<IPostModel, Model<IPostModel>, IPostModel>(
@@ -39,6 +39,9 @@ export const PostSchema = new Schema<IPostModel, Model<IPostModel>, IPostModel>(
     description: {
       type: String,
     },
+    location: {
+      type: String
+    }
   },
   { timestamps: true },
 );

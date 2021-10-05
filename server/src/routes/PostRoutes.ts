@@ -9,7 +9,9 @@ router.post("/like-post/:postId", verifyAccessToken, postController.likePost)
 
 router.get('/', postController.getPosts);
 router.get('/:username', postController.getPostsByUsername);
+
 router.put('/:postId', verifyAccessToken, postController.updatePost);
+
 router.delete('/:postId', verifyAccessToken, postController.deletePost);
 
 export default router;

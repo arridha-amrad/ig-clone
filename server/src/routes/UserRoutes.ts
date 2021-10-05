@@ -17,6 +17,7 @@ router.put(
   verifyAccessToken,
   userController.changePassword,
 );
+
 router.post('/upload-avatar', verifyAccessToken, userController.uploadAvatar);
 
 export default router;
