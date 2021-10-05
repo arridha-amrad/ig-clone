@@ -4,9 +4,9 @@ import PostModel, { IPostModel } from '../models/PostModel';
 type MongoDBPostModel =
   // eslint-disable-next-line
   | (Document<any, any, IPostModel> &
-      IPostModel & {
-        _id: Schema.Types.ObjectId;
-      })
+    IPostModel & {
+      _id: Schema.Types.ObjectId;
+    })
   | null;
 
 export const save = async (data: IPostModel): Promise<IPostModel> => {
@@ -24,12 +24,19 @@ export const findPosts = async (): Promise<IPostModel[]> => {
   return res;
 };
 
-export const findPostByUserId = async (
+export const findPostsByUserId = async (
   userId: string,
 ): Promise<IPostModel[]> => {
-  return PostModel.find({ user: userId })
-    .populate('likes', 'username')
-    .populate('comments');
+  return PostModel.find({ user: userId }, null, { sort: '-createdAt' })
+    .populate('likes', 'username imageURL')
+    .populate({
+      path: 'comments',
+      populate: {
+        path: 'user',
+        select: 'username imageURL updatedAt'
+      },
+      select: '-post'
+    })
 };
 
 export const findPostByIdAndUpdate = async (

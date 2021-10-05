@@ -5,25 +5,18 @@ import { verifyAccessToken } from '../services/JwtService';
 const router = Router();
 
 router.get('/me', verifyAccessToken, userController.me);
+router.get('/:username', userController.findUserAndPostsByUsername);
 
-router.get('/test', (req, res) => {
-  res.send('test');
-});
-
-router.post(
+router.put(
   '/update-user-data',
   verifyAccessToken,
   userController.updateUserData,
 );
-
-router.post(
+router.put(
   '/change-password',
   verifyAccessToken,
   userController.changePassword,
 );
-
-router.get('/:username', userController.findUserByUsername);
-
 router.post('/upload-avatar', verifyAccessToken, userController.uploadAvatar);
 
 export default router;

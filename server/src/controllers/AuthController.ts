@@ -31,6 +31,51 @@ import { generateNumber } from '../utils/RandomNumberGenerator';
 import * as VerificationServices from '../services/VerificationService';
 import { IVerificationModel } from '../models/VerificationModel';
 import { authenticatedUserDataMapper } from '../utils/mapper';
+import * as NotificationService from "../services/NotificationService"
+
+export const loginHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+): Promise<void> => {
+  const { identity, password }: LoginRequest = req.body;
+  const { valid, errors } = Validator.loginValidator({
+    identity,
+    password,
+  });
+  if (!valid) {
+    return next(new BadRequestException(errors));
+  }
+  try {
+    const user = await UserServices.findUserByUsernameOrEmail(identity);
+    if (!user) {
+      return next(new Exception(HTTP_CODE.NOT_FOUND, 'user not found'));
+    }
+    if (!user.isVerified) {
+      return next(new Exception(HTTP_CODE.FORBIDDEN, msg.emailNotVerified));
+    }
+    const isMatch = await argon2.verify(user.password ?? '', password);
+    if (!isMatch) {
+      return next(new Exception(HTTP_CODE.FORBIDDEN, msg.invalidPassword));
+    }
+    await UserServices.findUserByIdAndUpdate(user._id, { isLogin: true });
+    const accessToken = await JwtService.signAccessToken(user);
+    const refreshToken = await JwtService.signRefreshToken(user);
+    if (accessToken && refreshToken) {
+      const encryptedAccessToken = encrypt(accessToken);
+      const encryptedRefreshToken = encrypt(refreshToken);
+      // store refreshToken to redis
+      await redis.set(`${user._id}_refToken`, encryptedRefreshToken);
+      const data = authenticatedUserDataMapper(user);
+      const notifications = await NotificationService.findNotificationsByUserId(data._id as string)
+      const result = { ...data, notifications }
+      return responseWithCookie(res, encryptedAccessToken, result);
+    }
+  } catch (err) {
+    console.log(err);
+    return next(new ServerErrorException());
+  }
+};
 
 export const isExists = async (
   req: Request,
@@ -137,48 +182,6 @@ export const emailVerificationHandler = async (
     }
   } catch (err) {
     console.log('email verification errors : ', err);
-    return next(new ServerErrorException());
-  }
-};
-
-export const loginHandler = async (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-): Promise<void> => {
-  const { identity, password }: LoginRequest = req.body;
-  const { valid, errors } = Validator.loginValidator({
-    identity,
-    password,
-  });
-  if (!valid) {
-    return next(new BadRequestException(errors));
-  }
-  try {
-    const user = await UserServices.findUserByUsernameOrEmail(identity);
-    if (!user) {
-      return next(new Exception(HTTP_CODE.NOT_FOUND, 'user not found'));
-    }
-    if (!user.isVerified) {
-      return next(new Exception(HTTP_CODE.FORBIDDEN, msg.emailNotVerified));
-    }
-    const isMatch = await argon2.verify(user.password ?? '', password);
-    if (!isMatch) {
-      return next(new Exception(HTTP_CODE.FORBIDDEN, msg.invalidPassword));
-    }
-    await UserServices.findUserByIdAndUpdate(user._id, { isLogin: true });
-    const accessToken = await JwtService.signAccessToken(user);
-    const refreshToken = await JwtService.signRefreshToken(user);
-    if (accessToken && refreshToken) {
-      const encryptedAccessToken = encrypt(accessToken);
-      const encryptedRefreshToken = encrypt(refreshToken);
-      // store refreshToken to redis
-      await redis.set(`${user._id}_refToken`, encryptedRefreshToken);
-      const data = authenticatedUserDataMapper(user);
-      return responseWithCookie(res, encryptedAccessToken, data);
-    }
-  } catch (err) {
-    console.log(err);
     return next(new ServerErrorException());
   }
 };

@@ -8,6 +8,45 @@ import * as PostService from '../services/PostService';
 import { uploadToCloudinary } from '../utils/FileUploader';
 import * as UserService from '../services/UserService';
 import fs from 'fs';
+import * as NotificationService from "../services/NotificationService"
+import { likedPostNotification } from '../templates/NotificationTemplates';
+
+export const likePost = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  const userId = req.userId
+  const postId = req.params.postId
+  try {
+    const post = await PostService.findPostById(postId)
+    const sender = await UserService.findUserById(userId)
+    if (post && sender) {
+      const isLiked = post.likes.includes(userId)
+      if (isLiked) {
+        post.likes = post.likes.filter((like) => like !== userId)
+        await NotificationService.removeNotificationOfLikedPost(
+          post.user,
+          userId,
+          post.id
+        )
+      } else {
+        post.likes.push(userId)
+        await NotificationService.createNotificationOfLikedPost(
+          post.user,
+          userId,
+          post.id,
+          likedPostNotification(sender.username)
+        )
+      }
+      const updatedPost = await post.save()
+      res.status(200).send(updatedPost)
+    }
+  } catch (err) {
+    console.log(err)
+    next(new ServerErrorException())
+  }
+}
 
 export const createPost = async (
   req: Request,
@@ -62,7 +101,7 @@ export const getPostsByUsername = async (
   try {
     const user = await UserService.findUserByUsernameOrEmail(username);
     if (user) {
-      const posts = await PostService.findPostByUserId(user._id as string);
+      const posts = await PostService.findPostsByUserId(user._id as string);
       return responseSuccess(res, HTTP_CODE.OK, posts);
     } else {
       res.status(400).send('user not found');

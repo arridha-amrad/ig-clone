@@ -6,7 +6,9 @@ export interface INotificationModel {
   content: string;
   sender: string;
   receiver: string;
-  post: string;
+  post: string | null;
+  commentOfPost: string | null;
+  commentOfComment: string | null;
   isRead: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -40,6 +42,14 @@ export const NotificationSchema = new Schema<
       type: String,
       ref: 'Post',
     },
+    commentOfPost: {
+      type: String,
+      ref: 'CommentOfPost'
+    },
+    commentOfComment: {
+      type: String,
+      ref: 'CommentOfComment'
+    }
   },
   { timestamps: true },
 );

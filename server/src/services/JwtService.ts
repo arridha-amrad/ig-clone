@@ -63,7 +63,7 @@ export const verifyTokenLink = (token: string): Promise<LinkPayloadType> => {
 
 //* ACCESS TOKEN
 const accessTokenSignOptions: jwt.SignOptions = {
-  expiresIn: '1m',
+  expiresIn: '7d',
   issuer: 'node-authentication',
   audience: 'node-authentication-audience',
   subject: 'authentication',
@@ -72,7 +72,7 @@ const accessTokenSignOptions: jwt.SignOptions = {
 
 const accessTokenVerifyOptions: jwt.VerifyOptions = {
   algorithms: ['RS256'],
-  maxAge: '1m',
+  maxAge: '7d',
   issuer: 'node-authentication',
   audience: 'node-authentication-audience',
   subject: 'authentication',

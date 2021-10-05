@@ -3,8 +3,8 @@ import mongoose, { Schema, Model } from 'mongoose';
 export interface IPostModel {
   _id: Schema.Types.ObjectId;
   user: string;
-  likes: [string];
-  comments: [string];
+  likes: string[];
+  comments: string[];
   createdAt: Date;
   updatedAt: Date;
   // provided in req.body

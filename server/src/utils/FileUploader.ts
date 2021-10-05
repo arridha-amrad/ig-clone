@@ -1,6 +1,5 @@
 import { UploadApiResponse, v2 } from 'cloudinary';
 import { UploadedFile } from 'express-fileupload';
-import fs from 'fs';
 
 const cloudinary = v2;
 

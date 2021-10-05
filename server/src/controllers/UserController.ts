@@ -9,19 +9,25 @@ import Exception from '../exceptions/Exception';
 import { uploadToCloudinary } from '../utils/FileUploader';
 import { UploadedFile } from 'express-fileupload';
 import fs from 'fs';
+import * as PostService from "../services/PostService"
+import { IUserModel } from '../models/UserModel';
 
-export const findUserByUsername = async (
+export const findUserAndPostsByUsername = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const user = await UserService.findUserAndPostsByUsername(
+    const user = await UserService.findUserByUsernameOrEmail(
       req.params.username,
     );
     if (user) {
-      const data = authenticatedUserDataMapper(user);
-      return responseSuccess(res, HTTP_CODE.OK, { ...data });
+      const posts = await PostService.findPostsByUserId(user._id as string)
+      const userData = authenticatedUserDataMapper(user);
+      const result = { ...userData, posts }
+      return responseSuccess(res, HTTP_CODE.OK, result);
+    } else {
+      next(new Exception(HTTP_CODE.NOT_FOUND, "user not found"))
     }
   } catch (err) {
     console.log(err);
@@ -38,7 +44,9 @@ export const me = async (
     const user = await UserService.findUserById(req.userId);
     if (user) {
       const data = authenticatedUserDataMapper(user);
-      return responseSuccess(res, HTTP_CODE.OK, data);
+      res.status(200).send(data)
+    } else {
+      next(new Exception(HTTP_CODE.NOT_FOUND, "user not found"))
     }
   } catch (err) {
     console.log(err);
@@ -52,16 +60,20 @@ export const updateUserData = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
+    const data = req.body as Partial<IUserModel>
     const updateResult = await UserService.findUserByIdAndUpdate(
-      req.cookies.COOKIE_ID,
-      { ...req.body },
+      req.userId,
+      data,
     );
     if (updateResult) {
-      const data = authenticatedUserDataMapper(updateResult);
-      return responseSuccess(res, HTTP_CODE.OK, data);
+      const result = authenticatedUserDataMapper(updateResult);
+      res.status(200).send(result)
     }
-  } catch (err) {
+  } catch (err: any) {
     console.log(err);
+    if (err.keyPattern.username > 0) {
+      next(new Exception(HTTP_CODE.BAD_REQUEST, "username has been used by another user"))
+    }
     next(new ServerErrorException());
   }
 };
@@ -73,18 +85,16 @@ export const changePassword = async (
 ): Promise<void> => {
   try {
     const { oldPassword, newPassword } = req.body;
-    const user = await UserService.findUserById(req.cookies.COOKIE_ID);
+    const user = await UserService.findUserById(req.userId);
     if (user) {
       const isMatch = await argon2.verify(user.password ?? '', oldPassword);
       if (isMatch) {
         const newHashedPassword = await argon2.hash(newPassword);
-        const result = await UserService.findUserByIdAndUpdate(
-          req.cookies.COOKIE_ID,
+        await UserService.findUserByIdAndUpdate(
+          req.userId,
           { password: newHashedPassword },
         );
-        if (result) {
-          return responseSuccess(res, HTTP_CODE.OK, 'password changed');
-        }
+        res.status(200).send("password changed")
       } else {
         return next(new Exception(HTTP_CODE.BAD_REQUEST, 'wrong password'));
       }
@@ -122,6 +132,7 @@ export const uploadAvatar = async (
         res.status(200).send(uploadResult?.secure_url);
       }
     } else {
+      fs.unlinkSync(file.tempFilePath);
       return next(new Exception(HTTP_CODE.BAD_REQUEST, 'file not supported'));
     }
   } catch (err) {

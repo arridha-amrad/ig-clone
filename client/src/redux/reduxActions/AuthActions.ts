@@ -50,16 +50,16 @@ export const uploadAvatar =
 
 export const updateUserData =
   (data: Partial<AuthenticatedUserData>) =>
-  async (dispatch: Dispatch<AuthMessageAction>) => {
-    dispatchRequiredActions(dispatch);
-    try {
-      const result = await axiosInstance.post("/user/update-user-data", data);
-      dispatchMessage(dispatch, "Saved", "success");
-      dispatch({ type: "UPDATE_USER_DATA", payload: result.data });
-    } catch (err: any) {
-      console.log(err.response.data);
-    }
-  };
+    async (dispatch: Dispatch<AuthMessageAction>) => {
+      dispatchRequiredActions(dispatch);
+      try {
+        const result = await axiosInstance.put("/user/update-user-data", data);
+        dispatchMessage(dispatch, "Saved", "success");
+        dispatch({ type: "UPDATE_USER_DATA", payload: result.data });
+      } catch (err: any) {
+        console.log(err.response.data);
+      }
+    };
 
 export const getLoginUserData =
   () => async (dispatch: Dispatch<AuthActionsType>) => {
@@ -88,16 +88,17 @@ export const verifyEmail =
     }
   };
 
-export const logout = () => async (dispatch: Dispatch<AuthMessageAction>) => {
-  dispatchRequiredActions(dispatch);
-  try {
-    await axiosInstance.post("/auth/logout");
-    localStorage.removeItem("data");
-    dispatch({ type: "LOGOUT" });
-  } catch (err: any) {
-    console.log(err);
-  }
-};
+export const logout = () =>
+  async (dispatch: Dispatch<AuthMessageAction>) => {
+    dispatchRequiredActions(dispatch);
+    try {
+      await axiosInstance.post("/auth/logout");
+      localStorage.removeItem("data");
+      dispatch({ type: "LOGOUT" });
+    } catch (err: any) {
+      console.log(err);
+    }
+  };
 
 export const login =
   (loginData: LoginData) => async (dispatch: Dispatch<AuthMessageAction>) => {
@@ -122,39 +123,39 @@ export const login =
 
 export const forgotPassword =
   (formData: ForgotPasswordData) =>
-  async (dispatch: Dispatch<AuthMessageAction>) => {
-    dispatchRequiredActions(dispatch);
-    try {
-      const res = await axiosInstance.post("/auth/forgot-password", formData);
-      dispatch({
-        type: "AUTH_SUCCESS",
-      });
-      dispatchMessage(dispatch, res.data.data, "success");
-    } catch (err: any) {
-      dispatch({
-        type: "AUTH_ERROR",
-      });
-      dispatchMessage(dispatch, err.response.data.message, "danger");
-    }
-  };
+    async (dispatch: Dispatch<AuthMessageAction>) => {
+      dispatchRequiredActions(dispatch);
+      try {
+        const res = await axiosInstance.post("/auth/forgot-password", formData);
+        dispatch({
+          type: "AUTH_SUCCESS",
+        });
+        dispatchMessage(dispatch, res.data.data, "success");
+      } catch (err: any) {
+        dispatch({
+          type: "AUTH_ERROR",
+        });
+        dispatchMessage(dispatch, err.response.data.message, "danger");
+      }
+    };
 
 export const resetPassword =
   (formData: ResetPasswordData) =>
-  async (dispatch: Dispatch<AuthMessageAction>) => {
-    dispatchRequiredActions(dispatch);
-    try {
-      const res = await axiosInstance.post(
-        `/auth/reset-password/${formData.token}`,
-        { password: formData.password }
-      );
-      dispatch({
-        type: "AUTH_SUCCESS",
-      });
-      dispatchMessage(dispatch, res.data.data, "success");
-    } catch (err: any) {
-      dispatch({
-        type: "AUTH_ERROR",
-      });
-      dispatchMessage(dispatch, err.response.data.message, "danger");
-    }
-  };
+    async (dispatch: Dispatch<AuthMessageAction>) => {
+      dispatchRequiredActions(dispatch);
+      try {
+        const res = await axiosInstance.post(
+          `/auth/reset-password/${formData.token}`,
+          { password: formData.password }
+        );
+        dispatch({
+          type: "AUTH_SUCCESS",
+        });
+        dispatchMessage(dispatch, res.data.data, "success");
+      } catch (err: any) {
+        dispatch({
+          type: "AUTH_ERROR",
+        });
+        dispatchMessage(dispatch, err.response.data.message, "danger");
+      }
+    };

@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import CommentOfCommentModel, {
+import {
   CommentOfCommentSchema,
   ICommentOfCommentModel,
 } from '../models/CommentOfComment';

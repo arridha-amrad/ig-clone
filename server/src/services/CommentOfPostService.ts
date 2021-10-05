@@ -12,7 +12,7 @@ export const save = async (
 export const findByIdAndUpdate = async (
   commentId: string,
   data: Partial<ICommentOfPostModel>,
-): Promise<ICommentOfPostModel> => {
+): Promise<ICommentOfPostModel | null> => {
   return CommentOfPostModel.findByIdAndUpdate(
     commentId,
     {

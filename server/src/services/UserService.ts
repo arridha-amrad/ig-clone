@@ -6,12 +6,6 @@ export const save = async (user: IUserModel): Promise<IUserModel> => {
   return newUser.save();
 };
 
-export const findUserAndPostsByUsername = async (
-  username: string,
-): Promise<IUserModel | null> => {
-  return UserModel.findOne({ username });
-};
-
 export const findUserByUsernameOrEmail = async (
   usernameOrEmail: string,
 ): Promise<IUserModel | null> => {

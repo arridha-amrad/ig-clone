@@ -14,3 +14,5 @@ export const resetPassword =
 
 export const commentNotification = (username: string, commentContent: string) =>
   `${username} commented on your post "${commentContent}"`;
+
+export const likedPostNotification = (username: string) => `${username} like your post`
