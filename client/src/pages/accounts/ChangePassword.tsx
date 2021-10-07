@@ -1,11 +1,11 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import AccountContainer from "../../components/accounts/container/AccountContainer";
+import AccountContainer from "../../components/AccountContainer";
 import AccountButton from "../../components/accounts/form/button";
 import AccountInput from "../../components/accounts/form/input";
 import AccountLink from "../../components/accounts/form/link";
-import AccountProfile from "../../components/accounts/profile/AccountProfile";
-import MyAlert from "../../components/alert/MyAlert";
+import AccountProfile from "../../components/AccountProfile";
+import MyAlert from "../../components/MyAlert";
 import { ChangePasswordData } from "../../dto/UserDTO";
 import { changePassword } from "../../redux/reduxActions/UserActions";
 import { RootState } from "../../redux/Store";
@@ -39,6 +39,9 @@ const ChangePassword: React.FC<ChangePasswordProps> = () => {
     });
   };
   const { messages } = useSelector((state: RootState) => state.message);
+  const { imageURL, username } = useSelector(
+    (state: RootState) => state.auth.authenticatedUser
+  );
 
   const dispatch = useDispatch();
 
@@ -113,10 +116,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = () => {
 
   return (
     <AccountContainer>
-      <AccountProfile
-        imgUrl="https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/SpongeBob_SquarePants_character.svg/1200px-SpongeBob_SquarePants_character.svg.png"
-        username="squarepants"
-      />
+      <AccountProfile imgUrl={imageURL} username={username} />
       <form onSubmit={handleSubmit}>
         <AccountInput
           onBlur={validatingOldPassword}

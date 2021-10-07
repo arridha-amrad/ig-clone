@@ -46,7 +46,7 @@ const MyFooter: React.FC<FooterProps> = () => {
 
 export default MyFooter;
 
-export const Footer = styled.div`
+const Footer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100px;
@@ -57,7 +57,7 @@ export const Footer = styled.div`
   }
 `;
 
-export const AuthFooter = styled.div`
+const AuthFooter = styled.div`
   min-height: 99px;
   max-width: 100%;
   display: flex;
@@ -66,7 +66,7 @@ export const AuthFooter = styled.div`
   flex-direction: column;
 `;
 
-export const AuthFooterRow = styled.div`
+const AuthFooterRow = styled.div`
   display: flex;
   justify-content: space-evenly;
   align-items: center;

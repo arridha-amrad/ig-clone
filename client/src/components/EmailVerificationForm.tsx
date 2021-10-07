@@ -10,7 +10,7 @@ import EnvelopeIcon from "../icons/email.svg";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/Store";
-import MyAlert from "./alert/MyAlert";
+import MyAlert from "./MyAlert";
 
 interface EmailVerificationProps {}
 

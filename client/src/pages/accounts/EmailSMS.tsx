@@ -1,6 +1,6 @@
 import React from "react";
-import AccountContainer from "../../components/accounts/container/AccountContainer";
-import EmailSMS from "../../components/accounts/emailSMS/EmailSMS";
+import AccountContainer from "../../components/AccountContainer";
+import EmailSMS from "../../components/EmailSMS";
 
 interface EmailAndSMSProps {}
 

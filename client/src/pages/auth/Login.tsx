@@ -8,7 +8,7 @@ import { login } from "../../redux/reduxActions/AuthActions";
 import { LoginValidator } from "../../validators/AuthValidator";
 import { AuthTitle } from "../../components/AuthPage";
 import InstagramText from "../../images/ig2.svg";
-import MyAlert from "../../components/alert/MyAlert";
+import MyAlert from "../../components/MyAlert";
 import FacebookButton from "../../components/auth/FacebookButton";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/Store";

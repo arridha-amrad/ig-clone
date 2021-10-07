@@ -8,7 +8,7 @@ import {
   Info,
   InfoBold,
 } from "../../components/accounts/accounts.elements";
-import AccountContainer from "../../components/accounts/container/AccountContainer";
+import AccountContainer from "../../components/AccountContainer";
 
 interface AppAndWebsitesProps { }
 

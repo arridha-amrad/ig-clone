@@ -1,5 +1,5 @@
 import React from "react";
-import AccountContainer from "../../components/accounts/container/AccountContainer";
+import AccountContainer from "../../components/AccountContainer";
 
 interface LoginActivityProps { }
 

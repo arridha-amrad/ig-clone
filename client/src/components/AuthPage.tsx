@@ -1,8 +1,8 @@
 import { FC, ReactNode } from "react";
 import { LinkBold } from "../styledComponents/link-el";
 import { VSpacer } from "../styledComponents/spacer-el";
-import MyAuthCarousel from "./auth/carousel/AuthCarousel";
-import MyFooter from "./auth/footer/AuthFooter";
+import MyAuthCarousel from "./AuthCarousel";
+import MyFooter from "./AuthFooter";
 import AppPlayStore from "./auth/getApp/AppPlayStore";
 
 import styled from "styled-components";
@@ -69,21 +69,11 @@ export const MainArea = styled.div`
   height: 100%;
 `;
 
-export const FormAuthAndCarouselContainer = styled.div`
+const FormAuthAndCarouselContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-`;
-
-export const AuthWrapper2 = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  max-width: 935px;
-  width: 100%;
-  height: 584px;
 `;
 
 export const FormAuth = styled.div`
@@ -96,7 +86,7 @@ export const FormAuth = styled.div`
   }
 `;
 
-export const AuthQuestion = styled.div`
+const AuthQuestion = styled.div`
   display: flex;
   height: 63px;
   align-items: center;
@@ -117,32 +107,6 @@ export const Paper = styled.div`
 
   form {
     width: 100%;
-  }
-`;
-
-export const Paper2 = styled(Paper)`
-  flex-direction: column;
-  width: 388px;
-  padding: 20px 40px;
-  margin-top: 50px;
-  background: #fff;
-
-  img {
-    height: 100px;
-  }
-
-  p {
-    color: #8e8e8e;
-    font-size: 14px;
-    text-align: center;
-    width: 260px;
-    line-height: 1.4;
-    letter-spacing: 1.1;
-  }
-
-  h4 {
-    font-weight: 600;
-    padding: 10px 0;
   }
 `;
 
@@ -172,18 +136,4 @@ export const AuthTitle = styled.div`
   img {
     height: 50px;
   }
-`;
-
-export const AuthFormAreaOne = styled.div`
-  padding: 20px 0px 10px 0;
-  width: 270px;
-`;
-
-export const BackToLoginContainer = styled.div`
-  border: 1px solid #ccc;
-  width: 388px;
-  border-radius: 0 0 3px 3px;
-  z-index: 99;
-  margin-top: -5px;
-  background-color: #fafafa;
 `;

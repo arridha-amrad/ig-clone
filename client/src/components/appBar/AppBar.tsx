@@ -167,7 +167,7 @@ export const Nav = styled.div`
   z-index: 90;
 `;
 
-export const NavArea = styled.div`
+const NavArea = styled.div`
   display: grid;
   width: 100%;
   height: 100%;

@@ -8,6 +8,8 @@ const SettingsOptions: React.FC<SettingsOptionsProps> = ({ isShow }) => {
   return (
     <>
       <ModalWrapper2 isShow={isShow}>
+        <ButtonLink to="/create-new-post">Create New Post</ButtonLink>
+        <Divider />
         <ButtonLink to="/accounts/change-password">Change Password</ButtonLink>
         <Divider />
         <ButtonLink to="/accounts/change-password">Nametag</ButtonLink>

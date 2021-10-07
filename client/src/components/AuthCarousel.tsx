@@ -30,9 +30,7 @@ const MyAuthCarousel: React.FC<MyAuthCarouselProps> = () => {
   );
 };
 
-export default MyAuthCarousel;
-
-export const AuthCarousel = styled.div`
+const AuthCarousel = styled.div`
   display: none;
   justify-content: flex-end;
   align-items: center;
@@ -42,7 +40,7 @@ export const AuthCarousel = styled.div`
   }
 `;
 
-export const IPhoneXFrameContainer = styled.div`
+const IPhoneXFrameContainer = styled.div`
   height: 582px;
   width: 371px;
   position: relative;
@@ -51,7 +49,7 @@ export const IPhoneXFrameContainer = styled.div`
   background-position: center;
 `;
 
-export const IPhoneFrame = styled.div`
+const IPhoneFrame = styled.div`
   position: absolute;
   left: 30px;
   top: -3px;
@@ -59,7 +57,7 @@ export const IPhoneFrame = styled.div`
   z-index: 5;
 `;
 
-export const IPhoneFrame2 = styled.div`
+const IPhoneFrame2 = styled.div`
   position: absolute;
   height: 420px;
   z-index: 1;
@@ -67,18 +65,18 @@ export const IPhoneFrame2 = styled.div`
   left: -20px;
 `;
 
-export const IPhoneXFrame = styled.img`
+const IPhoneXFrame = styled.img`
   object-fit: contain;
   height: 618px;
 `;
 
-export const IPhoneX2Frame = styled.img`
+const IPhoneX2Frame = styled.img`
   object-fit: contain;
   height: inherit;
   height: 580px;
 `;
 
-export const IPhoneXFrameCarousel = styled.div`
+const IPhoneXFrameCarousel = styled.div`
   width: 248px;
   position: absolute;
   right: 17px;
@@ -86,7 +84,9 @@ export const IPhoneXFrameCarousel = styled.div`
   z-index: -10;
 `;
 
-export const IPhoneXFrameImage = styled.img`
+const IPhoneXFrameImage = styled.img`
   height: 440px;
   object-fit: cover;
 `;
+
+export default MyAuthCarousel;

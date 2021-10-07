@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { MessageTypes } from "../../redux/reduxReducers/MessageReducer";
+import { MessageTypes } from "../redux/reduxReducers/MessageReducer";
 import styled from "styled-components";
 
 interface MyAlertProps {

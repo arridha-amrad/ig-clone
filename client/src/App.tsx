@@ -29,6 +29,7 @@ import {
   SET_UNAUTHENTICATED,
 } from "./redux/reduxTypes/AuthTypes";
 import SecureRoute from "./components/SecureRoute";
+import CreateNewPost from "./pages/CreateNewPost";
 
 interface AppProps {}
 
@@ -82,6 +83,11 @@ const App: React.FC<AppProps> = () => {
             <Route exact path="/" component={Login} />
             <Route exact path="/forgot-password" component={ForgotPassword} />
             <Route exact path="/reset-password" component={ResetPassword} />
+            <SecureRoute
+              exact
+              path="/create-new-post"
+              component={CreateNewPost}
+            />
             <SecureRoute exact path="/home" component={Home} />
             <SecureRoute exact path="/:username" component={UserPost} />
             <SecureRoute exact path="/:username/igtv" component={UserIGTV} />

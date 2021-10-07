@@ -1,6 +1,6 @@
 import { FC, ReactNode } from "react";
 import AuthAppBar from "./auth/appBar/AuthAppBar";
-import MyFooter from "./auth/footer/AuthFooter";
+import MyFooter from "./AuthFooter";
 import { AuthPageArea, FormAuth, MainArea, Paper } from "./AuthPage";
 import styled from "styled-components";
 import { MyLinkTwo } from "../styledComponents/link-el";
@@ -30,14 +30,14 @@ const AuthPageTwo: FC<AuthPageTwoProps> = ({ children }) => {
 
 export default AuthPageTwo;
 
-export const FormAuthTwo = styled(FormAuth)`
+const FormAuthTwo = styled(FormAuth)`
   justify-content: center;
   @media (min-width: 940px) {
     align-items: center;
   }
 `;
 
-export const PaperTwo = styled(Paper)`
+const PaperTwo = styled(Paper)`
   flex-direction: column;
   width: 388px;
   padding: 20px 40px;
@@ -63,7 +63,7 @@ export const PaperTwo = styled(Paper)`
   }
 `;
 
-export const BackToLoginContainer = styled.div`
+const BackToLoginContainer = styled.div`
   border: 1px solid #ccc;
   width: 388px;
   border-radius: 0 0 3px 3px;
@@ -72,7 +72,7 @@ export const BackToLoginContainer = styled.div`
   background-color: #fafafa;
 `;
 
-export const MyLinkThree = styled(MyLinkTwo)`
+const MyLinkThree = styled(MyLinkTwo)`
   display: block;
   text-align: center;
   width: inherit;

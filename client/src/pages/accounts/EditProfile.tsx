@@ -1,10 +1,10 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import AccountContainer from "../../components/accounts/container/AccountContainer";
+import AccountContainer from "../../components/AccountContainer";
 import AccountButton from "../../components/accounts/form/button";
 import AccountInput from "../../components/accounts/form/input";
-import AccountProfile from "../../components/accounts/profile/AccountProfile";
-import MyAlert from "../../components/alert/MyAlert";
+import AccountProfile from "../../components/AccountProfile";
+import MyAlert from "../../components/MyAlert";
 import { EditProfileData } from "../../dto/AuthDTO";
 import { updateUserData } from "../../redux/reduxActions/AuthActions";
 import { RootState } from "../../redux/Store";
@@ -13,11 +13,6 @@ interface EditProfileProps {}
 
 const EditProfile: React.FC<EditProfileProps> = () => {
   document.title = "Edit Profile - Instagram";
-
-  const [errors, setError] = useState({
-    email: "",
-    username: "",
-  });
 
   const user = useSelector((state: RootState) => state.auth.authenticatedUser);
 
@@ -69,8 +64,8 @@ const EditProfile: React.FC<EditProfileProps> = () => {
   return (
     <AccountContainer>
       <AccountProfile
-        imgUrl="https://upload.wikimedia.org/wikipedia/en/thumb/3/3b/SpongeBob_SquarePants_character.svg/1200px-SpongeBob_SquarePants_character.svg.png"
-        username="squarepant"
+        username={user.username}
+        imgUrl={user.imageURL}
         enableChangeProfile={true}
       />
       <form onSubmit={handleSubmit}>
