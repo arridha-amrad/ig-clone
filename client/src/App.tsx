@@ -79,16 +79,15 @@ const App: React.FC<AppProps> = () => {
       <BrowserRouter>
         <ThemeProvider theme={themes["light"]}>
           <GlobalStyles />
-
+          {/* {pathname === "/forgot-password" ||
+            (pathname === "/reset-password" && <AuthAppBar />)} */}
+          <AppBar />
           <Switch>
             <Route exact path="/accounts/emailsignup" component={Register} />
             <Route exact path="/" component={Login} />
             <Route exact path="/forgot-password" component={ForgotPassword} />
             <Route exact path="/reset-password" component={ResetPassword} />
-          </Switch>
 
-          <AppBar />
-          <Switch>
             <SecureRoute
               exact
               path="/create-new-post"

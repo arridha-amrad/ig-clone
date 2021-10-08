@@ -32,7 +32,6 @@ const AccountInput: React.FC<AccountInputProps> = ({
   return (
     <FormGroup aa_bigInput={inputSize === "big" ? true : false}>
       <label>{label}</label>
-
       {isInputArea ? (
         <InputArea aa_bigInput={inputSize === "big" ? true : false}>
           {name === "bio" ? (

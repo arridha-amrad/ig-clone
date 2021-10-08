@@ -17,7 +17,7 @@ export const deleteComment = async (
     if (deletedComment) {
       res.status(200).send("comment deleted")
     }
-  } catch (err: any) {
+  } catch (err) {
     console.log(err)
     next(new ServerErrorException())
   }
@@ -35,7 +35,7 @@ export const updateComment = async (
     if (updatedComment) {
       res.status(200).send(updatedComment)
     }
-  } catch (err: any) {
+  } catch (err) {
     console.log(err)
     next(new ServerErrorException())
   }
@@ -71,7 +71,7 @@ export const addComment = async (
     } else {
       next(new Exception(HTTP_CODE.NOT_FOUND, "comment not found"))
     }
-  } catch (err: any) {
+  } catch (err) {
     console.log(err)
   }
 }

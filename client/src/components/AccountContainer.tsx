@@ -7,7 +7,7 @@ import UserFooter from "./user/footer/UserFooter";
 import AccountMenu from "./AccountMenu";
 import styled from "styled-components";
 
-interface AccountContainerProps {}
+interface AccountContainerProps { }
 
 const AccountContainer: React.FC<AccountContainerProps> = ({ children }) => {
   useEffect(() => {

@@ -7,7 +7,7 @@ interface AuthAppBarProps {}
 
 const AuthAppBar: React.FC<AuthAppBarProps> = () => {
   return (
-    <Nav>
+    <Nav isHide={false}>
       <NavContainer>
         <div>
           <Link to="/">

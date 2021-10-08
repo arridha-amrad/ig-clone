@@ -17,9 +17,18 @@ const AppBar: React.FC<AppBarProps> = () => {
     location: { pathname },
   } = useHistory();
 
+  console.log(pathname);
+
   return (
     <>
-      <Nav>
+      <Nav
+        isHide={
+          pathname === "/" ||
+          pathname === "/accounts/emailsignup" ||
+          pathname === "/forgot-password" ||
+          pathname === "/reset-password"
+        }
+      >
         {showDropDown && <FixedLayer onClick={() => setShowDropDown(false)} />}
         <NavContainer>
           <NavArea>
@@ -156,12 +165,14 @@ const AppBar: React.FC<AppBarProps> = () => {
 };
 
 export default AppBar;
-
-export const Nav = styled.div`
+interface NavProps {
+  isHide: boolean;
+}
+export const Nav = styled.div<NavProps>`
   height: 52px;
   width: 100vw;
   background: #fff;
-  display: flex;
+  display: ${(props) => (props.isHide ? "none" : "flex")};
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid #ccc;

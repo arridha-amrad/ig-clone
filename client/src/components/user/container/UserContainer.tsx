@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-import AppBar from "../../appBar/AppBar";
 import AccountData from "../details/UserDetails";
 import ProfileMenus from "../menu/Menu";
 import { ProfileContainer, HorizontalLine } from "./userContainer.elements";
