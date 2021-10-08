@@ -9,6 +9,7 @@ import {
   VerifyEmailData,
 } from "../../dto/AuthDTO";
 import * as messageActions from "../reduxReducers/MessageReducer";
+import { AxiosResponse } from "axios";
 
 type AuthMessageAction = AuthActionsType | messageActions.MessageActionsType;
 
@@ -30,15 +31,15 @@ export const uploadAvatar =
   (formData: FormData) => async (dispatch: Dispatch<AuthActionsType>) => {
     dispatch({ type: "LOADING_AUTH" });
     try {
-      const res = await axiosInstance.post("/user/upload-avatar", formData, {
+      const res = (await axiosInstance.post("/user/upload-avatar", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
-      });
+      })) as AxiosResponse<unknown>;
       console.log("res data : ", res.data);
       dispatch({
         type: "UPLOAD_AVATAR",
-        payload: res.data,
+        payload: res.data as string,
       });
     } catch (err) {
       console.log(err);
@@ -52,7 +53,10 @@ export const updateUserData =
   async (dispatch: Dispatch<AuthMessageAction>) => {
     dispatchRequiredActions(dispatch);
     try {
-      const result = await axiosInstance.put("/user/update-user-data", data);
+      const result = (await axiosInstance.put(
+        "/user/update-user-data",
+        data
+      )) as AxiosResponse<AuthenticatedUserData>;
       dispatchMessage(dispatch, "Saved", "success");
       dispatch({ type: "UPDATE_USER_DATA", payload: result.data });
     } catch (err: any) {
@@ -103,7 +107,10 @@ export const login =
   (loginData: LoginData) => async (dispatch: Dispatch<AuthMessageAction>) => {
     dispatchRequiredActions(dispatch);
     try {
-      const res = await axiosInstance.post("/auth/login", loginData);
+      const res = (await axiosInstance.post(
+        "/auth/login",
+        loginData
+      )) as AxiosResponse<AuthenticatedUserData>;
       dispatch({
         type: "LOGIN_SUCCESS",
       });
@@ -125,11 +132,14 @@ export const forgotPassword =
   async (dispatch: Dispatch<AuthMessageAction>) => {
     dispatchRequiredActions(dispatch);
     try {
-      const res = await axiosInstance.post("/auth/forgot-password", formData);
+      const res = (await axiosInstance.post(
+        "/auth/forgot-password",
+        formData
+      )) as AxiosResponse<string>;
       dispatch({
         type: "AUTH_SUCCESS",
       });
-      dispatchMessage(dispatch, res.data.data, "success");
+      dispatchMessage(dispatch, res.data, "success");
     } catch (err: any) {
       dispatch({
         type: "AUTH_ERROR",
@@ -143,14 +153,14 @@ export const resetPassword =
   async (dispatch: Dispatch<AuthMessageAction>) => {
     dispatchRequiredActions(dispatch);
     try {
-      const res = await axiosInstance.post(
+      const res = (await axiosInstance.post(
         `/auth/reset-password/${formData.token}`,
         { password: formData.password }
-      );
+      )) as AxiosResponse<string>;
       dispatch({
         type: "AUTH_SUCCESS",
       });
-      dispatchMessage(dispatch, res.data.data, "success");
+      dispatchMessage(dispatch, res.data, "success");
     } catch (err: any) {
       dispatch({
         type: "AUTH_ERROR",

@@ -3,7 +3,6 @@ import { RESET_MESSAGE } from "../redux/reduxReducers/MessageReducer";
 import store from "../redux/Store";
 import { MyContainer } from "../styledComponents/container-el";
 import { VSpacer } from "../styledComponents/spacer-el";
-import AppBar from "./appBar/AppBar";
 import UserFooter from "./user/footer/UserFooter";
 import AccountMenu from "./AccountMenu";
 import styled from "styled-components";
@@ -17,8 +16,6 @@ const AccountContainer: React.FC<AccountContainerProps> = ({ children }) => {
   }, []);
   return (
     <>
-      <AppBar />
-      <VSpacer aa_length="90px" />
       <MyContainer>
         <AccountsWrapper>
           <AccountsLeft>

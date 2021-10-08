@@ -9,7 +9,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(
   (config: AxiosRequestConfig) => {
-    config.headers["Content-Type"] = "application/json";
+    config.headers!["Content-Type"] = "application/json";
     return config;
   },
   (error) => {

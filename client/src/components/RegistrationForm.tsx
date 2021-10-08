@@ -117,13 +117,13 @@ const RegisterForm: FC<RegisterFormProps> = ({
         const resUsername = await axiosInstance.post("/auth/is-exists", {
           data: states.username,
         });
-        if (resEmail.data !== "ok") {
+        if (resEmail.status === 403) {
           setMessage("Email has been registered");
           setError({
             ...errors,
             email: "not-available",
           });
-        } else if (resUsername.data !== "ok") {
+        } else if (resUsername.status === 403) {
           setMessage("Username has been registered");
           setError({
             ...errors,

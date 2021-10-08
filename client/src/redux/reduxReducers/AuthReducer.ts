@@ -52,7 +52,7 @@ const AuthReducer = (
     case "UPDATE_USER_DATA":
       return {
         ...state,
-        authenticatedUser: { ...action.payload },
+        authenticatedUser: { ...state.authenticatedUser, ...action.payload },
         loadingAuth: false,
         requestStatus: true,
       };

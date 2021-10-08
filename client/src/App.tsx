@@ -30,6 +30,7 @@ import {
 } from "./redux/reduxTypes/AuthTypes";
 import SecureRoute from "./components/SecureRoute";
 import CreateNewPost from "./pages/CreateNewPost";
+import AppBar from "./components/appBar/AppBar";
 
 interface AppProps {}
 
@@ -78,11 +79,16 @@ const App: React.FC<AppProps> = () => {
       <BrowserRouter>
         <ThemeProvider theme={themes["light"]}>
           <GlobalStyles />
+
           <Switch>
             <Route exact path="/accounts/emailsignup" component={Register} />
             <Route exact path="/" component={Login} />
             <Route exact path="/forgot-password" component={ForgotPassword} />
             <Route exact path="/reset-password" component={ResetPassword} />
+          </Switch>
+
+          <AppBar />
+          <Switch>
             <SecureRoute
               exact
               path="/create-new-post"

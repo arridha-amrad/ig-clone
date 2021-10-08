@@ -31,7 +31,7 @@ import { generateNumber } from '../utils/RandomNumberGenerator';
 import * as VerificationServices from '../services/VerificationService';
 import { IVerificationModel } from '../models/VerificationModel';
 import { authenticatedUserDataMapper } from '../utils/mapper';
-import * as NotificationService from "../services/NotificationService"
+import * as NotificationService from '../services/NotificationService';
 
 export const loginHandler = async (
   req: Request,
@@ -67,8 +67,10 @@ export const loginHandler = async (
       // store refreshToken to redis
       await redis.set(`${user._id}_refToken`, encryptedRefreshToken);
       const data = authenticatedUserDataMapper(user);
-      const notifications = await NotificationService.findNotificationsByUserId(data._id as string)
-      const result = { ...data, notifications }
+      const notifications = await NotificationService.findNotificationsByUserId(
+        data._id as string,
+      );
+      const result = { ...data, notifications };
       return responseWithCookie(res, encryptedAccessToken, result);
     }
   } catch (err) {
@@ -85,7 +87,7 @@ export const isExists = async (
   try {
     const result = await UserServices.findUserByUsernameOrEmail(req.body.data);
     if (result) {
-      res.status(200).send('not-available');
+      res.status(403).send('not-available');
     } else {
       res.status(200).send('ok');
     }

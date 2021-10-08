@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import AppBar from "../../appBar/AppBar";
 import AccountData from "../details/UserDetails";
 import ProfileMenus from "../menu/Menu";
-import { SpacerFromNavbarProfile } from "../../../styledComponents/spacer-el";
 import { ProfileContainer, HorizontalLine } from "./userContainer.elements";
 import UserFooter from "../footer/UserFooter";
 import styled from "styled-components";
@@ -17,7 +16,6 @@ import { uploadAvatar } from "../../../redux/reduxActions/AuthActions";
 interface UserContainerProps {}
 
 const UserContainer: React.FC<UserContainerProps> = ({ children }) => {
-  const [isUpdate, setIsUpdate] = useState(false);
   const [data, setData] = useState<ProfilePageData>({
     bio: "",
     username: "",
@@ -50,7 +48,6 @@ const UserContainer: React.FC<UserContainerProps> = ({ children }) => {
       website: user.website,
       imageURL: user.imageURL,
     });
-    setIsUpdate(false);
     // eslint-disable-next-line
   }, []);
 
@@ -60,7 +57,6 @@ const UserContainer: React.FC<UserContainerProps> = ({ children }) => {
     inputFileRef.current?.click();
   };
   const handleImageChange = (e: any) => {
-    setIsUpdate(true);
     const file = e.target?.files[0];
     const formData = new FormData();
     formData.append("avatarFile", file);
@@ -68,10 +64,8 @@ const UserContainer: React.FC<UserContainerProps> = ({ children }) => {
   };
   return (
     <>
-      <AppBar />
-      <SpacerFromNavbarProfile />
       <ProfileContainer>
-        <AccountHeader>
+        <Header>
           <AccountWrapper>
             <AvatarWrapper
               onClick={
@@ -129,7 +123,7 @@ const UserContainer: React.FC<UserContainerProps> = ({ children }) => {
             </PostFoll2>
           </PostFollowerFollowingArea2>
           {/* This line appears for min-width 736px */}
-        </AccountHeader>
+        </Header>
 
         <HorizontalLine />
         <ProfileMenus data={data} />
@@ -210,7 +204,7 @@ const AccountDataWrapper = styled.div`
   height: 100%;
 `;
 
-const AccountHeader = styled.div`
+const Header = styled.div`
   margin-bottom: 0;
   @media (min-width: 736px) {
     margin-bottom: 44px;

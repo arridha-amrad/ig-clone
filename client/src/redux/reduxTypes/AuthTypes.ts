@@ -17,7 +17,7 @@ export const UPLOAD_AVATAR = "UPLOAD_AVATAR";
 export type AuthActionsType =
   | { type: typeof UPLOAD_AVATAR; payload: string }
   | { type: typeof AUTHENTICATED_USER_DATA; payload: AuthenticatedUserData }
-  | { type: typeof UPDATE_USER_DATA; payload: AuthenticatedUserData }
+  | { type: typeof UPDATE_USER_DATA; payload: Partial<AuthenticatedUserData> }
   | { type: typeof REDIRECT_TO_LOGIN }
   | { type: typeof AUTH_SUCCESS }
   | { type: typeof AUTH_ERROR }
