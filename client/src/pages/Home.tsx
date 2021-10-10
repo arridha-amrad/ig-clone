@@ -12,31 +12,34 @@ import {
   WrapperRight,
   SuggestionBox,
 } from "../components/home/home.elements";
+import MainWrapper from "../components/MainWrapper";
 
 interface HomeProps {}
 
 const Home: React.FC<HomeProps> = () => {
   return (
     <>
-      <MyContainer>
-        <HomeGrid>
-          <WrapperLeft>
-            <Story />
-            <VSpacer aa_length="25px" />
-            <UserPost />
-          </WrapperLeft>
-          <WrapperRight>
-            <HomeProfile />
-            <SuggestionBox>
-              <div>Suggestions For You</div>
-              <p>See All</p>
-            </SuggestionBox>
-            <VSpacer />
-            <SuggestionUser />
-            <HomeFooter />
-          </WrapperRight>
-        </HomeGrid>
-      </MyContainer>
+      <MainWrapper>
+        <MyContainer>
+          <HomeGrid>
+            <WrapperLeft>
+              <Story />
+              <VSpacer aa_length="25px" />
+              <UserPost />
+            </WrapperLeft>
+            <WrapperRight>
+              <HomeProfile />
+              <SuggestionBox>
+                <div>Suggestions For You</div>
+                <p>See All</p>
+              </SuggestionBox>
+              <VSpacer />
+              <SuggestionUser />
+              <HomeFooter />
+            </WrapperRight>
+          </HomeGrid>
+        </MyContainer>
+      </MainWrapper>
     </>
   );
 };

@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { findUserAndPostsByUsername } from "../../../redux/reduxActions/UserActions";
 import { ProfilePageData } from "../../../dto/UserDTO";
 import { uploadAvatar } from "../../../redux/reduxActions/AuthActions";
+import MainWrapper from "../../../components/MainWrapper";
 
 interface UserContainerProps {}
 
@@ -63,72 +64,74 @@ const UserContainer: React.FC<UserContainerProps> = ({ children }) => {
   };
   return (
     <>
-      <ProfileContainer>
-        <Header>
-          <AccountWrapper>
-            <AvatarWrapper
-              onClick={
-                data.username === authenticatedUser.username
-                  ? openInputFile
-                  : undefined
-              }
-            >
-              <AccountAvatar
-                src={
+      <MainWrapper>
+        <ProfileContainer>
+          <Header>
+            <AccountWrapper>
+              <AvatarWrapper
+                onClick={
                   data.username === authenticatedUser.username
-                    ? authenticatedUser.imageURL
-                    : data.imageURL
+                    ? openInputFile
+                    : undefined
                 }
-                alt="profile"
-              />
-              <input
-                ref={inputFileRef}
-                type="file"
-                name="avatarFile"
-                id="fileInput"
-                hidden={true}
-                onChange={handleImageChange}
-              />
-            </AvatarWrapper>
-            <AccountDataWrapper>
-              <AccountData
-                isAuthenticatedUser={
-                  data.username === authenticatedUser.username
-                }
-                data={data}
-              />
-            </AccountDataWrapper>
-          </AccountWrapper>
+              >
+                <AccountAvatar
+                  src={
+                    data.username === authenticatedUser.username
+                      ? authenticatedUser.imageURL
+                      : data.imageURL
+                  }
+                  alt="profile"
+                />
+                <input
+                  ref={inputFileRef}
+                  type="file"
+                  name="avatarFile"
+                  id="fileInput"
+                  hidden={true}
+                  onChange={handleImageChange}
+                />
+              </AvatarWrapper>
+              <AccountDataWrapper>
+                <AccountData
+                  isAuthenticatedUser={
+                    data.username === authenticatedUser.username
+                  }
+                  data={data}
+                />
+              </AccountDataWrapper>
+            </AccountWrapper>
 
-          {/* This line appears for min-width 736px */}
-          <AccountWrapper2>
-            <Name>{data.fullName}</Name>
-            <Bio>{data.bio}</Bio>
-            <Web>{data.website}</Web>
-          </AccountWrapper2>
+            {/* This line appears for min-width 736px */}
+            <AccountWrapper2>
+              <Name>{data.fullName}</Name>
+              <Bio>{data.bio}</Bio>
+              <Web>{data.website}</Web>
+            </AccountWrapper2>
 
-          <PostFollowerFollowingArea2>
-            <PostFoll2>
-              <Total2>{data.totalPosts}</Total2>
-              <Menu2>Posts</Menu2>
-            </PostFoll2>
-            <PostFoll2>
-              <Total2>{data.totalFollowers}</Total2>
-              <Menu2>Followers</Menu2>
-            </PostFoll2>
-            <PostFoll2>
-              <Total2>{data.totalFollowings}</Total2>
-              <Menu2>Followings</Menu2>
-            </PostFoll2>
-          </PostFollowerFollowingArea2>
-          {/* This line appears for min-width 736px */}
-        </Header>
+            <PostFollowerFollowingArea2>
+              <PostFoll2>
+                <Total2>{data.totalPosts}</Total2>
+                <Menu2>Posts</Menu2>
+              </PostFoll2>
+              <PostFoll2>
+                <Total2>{data.totalFollowers}</Total2>
+                <Menu2>Followers</Menu2>
+              </PostFoll2>
+              <PostFoll2>
+                <Total2>{data.totalFollowings}</Total2>
+                <Menu2>Followings</Menu2>
+              </PostFoll2>
+            </PostFollowerFollowingArea2>
+            {/* This line appears for min-width 736px */}
+          </Header>
 
-        <HorizontalLine />
-        <ProfileMenus data={data} />
-        {children}
-        <UserFooter />
-      </ProfileContainer>
+          <HorizontalLine />
+          <ProfileMenus data={data} />
+          {children}
+          <UserFooter />
+        </ProfileContainer>
+      </MainWrapper>
     </>
   );
 };

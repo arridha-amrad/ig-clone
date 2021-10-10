@@ -6,8 +6,9 @@ import { VSpacer } from "../styledComponents/spacer-el";
 import UserFooter from "./user/footer/UserFooter";
 import AccountMenu from "./AccountMenu";
 import styled from "styled-components";
+import MainWrapper from "./MainWrapper";
 
-interface AccountContainerProps { }
+interface AccountContainerProps {}
 
 const AccountContainer: React.FC<AccountContainerProps> = ({ children }) => {
   useEffect(() => {
@@ -16,16 +17,18 @@ const AccountContainer: React.FC<AccountContainerProps> = ({ children }) => {
   }, []);
   return (
     <>
-      <MyContainer>
-        <AccountsWrapper>
-          <AccountsLeft>
-            <AccountMenu />
-            <VSpacer aa_length="70px" />
-          </AccountsLeft>
-          <AccountsRight>{children}</AccountsRight>
-        </AccountsWrapper>
-        <UserFooter />
-      </MyContainer>
+      <MainWrapper>
+        <MyContainer>
+          <AccountsWrapper>
+            <AccountsLeft>
+              <AccountMenu />
+              <VSpacer aa_length="70px" />
+            </AccountsLeft>
+            <AccountsRight>{children}</AccountsRight>
+          </AccountsWrapper>
+          <UserFooter />
+        </MyContainer>
+      </MainWrapper>
     </>
   );
 };
