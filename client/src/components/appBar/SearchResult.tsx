@@ -1,21 +1,29 @@
-import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { ImgStory, ImgStoryWrapper } from "../home/story/story.elements";
+import { ISearchResult } from "./NavSearch";
+import { Link } from "react-router-dom";
 
-interface SearchResultProps {}
+interface SearchResultProps {
+  results: ISearchResult[];
+  setSearch: React.Dispatch<React.SetStateAction<string>>;
+}
 
-const SearchResult: React.FC<SearchResultProps> = () => {
+const SearchResult: React.FC<SearchResultProps> = ({ results, setSearch }) => {
   return (
     <ResultContainer>
-      <UserWrapper>
-        <AvatarWrapper>
-          <Avatar src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" />
-        </AvatarWrapper>
-        <div>
-          <Username to="/">john_doe </Username>
-          <Name>John Doe</Name>
-        </div>
-      </UserWrapper>
+      {results.map((res, index) => (
+        <UserWrapper key={index}>
+          <AvatarWrapper>
+            <Avatar src={res.imageURL} alt="avatar" />
+          </AvatarWrapper>
+          <div>
+            <Username onClick={() => setSearch("")} to={`/${res.username}`}>
+              {res.username}
+            </Username>
+            <Name>{res.fullName}</Name>
+          </div>
+        </UserWrapper>
+      ))}
     </ResultContainer>
   );
 };

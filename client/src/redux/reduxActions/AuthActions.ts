@@ -36,7 +36,6 @@ export const uploadAvatar =
           "Content-Type": "multipart/form-data",
         },
       })) as AxiosResponse<unknown>;
-      console.log("res data : ", res.data);
       dispatch({
         type: "UPLOAD_AVATAR",
         payload: res.data as string,
@@ -50,23 +49,24 @@ export const uploadAvatar =
 
 export const updateUserData =
   (data: Partial<AuthenticatedUserData>) =>
-  async (dispatch: Dispatch<AuthMessageAction>) => {
-    dispatchRequiredActions(dispatch);
-    try {
-      const result = (await axiosInstance.put(
-        "/user/update-user-data",
-        data
-      )) as AxiosResponse<AuthenticatedUserData>;
-      dispatchMessage(dispatch, "Saved", "success");
-      dispatch({ type: "UPDATE_USER_DATA", payload: result.data });
-    } catch (err: any) {
-      console.log(err.response.data);
-      dispatchMessage(dispatch, err.response.data.message, "danger");
-    }
-  };
+    async (dispatch: Dispatch<AuthMessageAction>) => {
+      dispatchRequiredActions(dispatch);
+      try {
+        const result = (await axiosInstance.put(
+          "/user/update-user-data",
+          data
+        )) as AxiosResponse<AuthenticatedUserData>;
+        dispatchMessage(dispatch, "Saved", "success");
+        dispatch({ type: "UPDATE_USER_DATA", payload: result.data });
+      } catch (err: any) {
+        console.log(err.response.data);
+        dispatchMessage(dispatch, err.response.data.message, "danger");
+      }
+    };
 
 export const getLoginUserData =
   () => async (dispatch: Dispatch<AuthActionsType>) => {
+    dispatch({ type: "LOADING_AUTH" })
     try {
       const result = await axiosInstance.get("/user/me");
       dispatch({
@@ -75,6 +75,8 @@ export const getLoginUserData =
       });
     } catch (err: any) {
       console.log(err.response.data);
+    } finally {
+      dispatch({ type: "STOP_LOADING_AUTH" })
     }
   };
 
@@ -129,42 +131,42 @@ export const login =
 
 export const forgotPassword =
   (formData: ForgotPasswordData) =>
-  async (dispatch: Dispatch<AuthMessageAction>) => {
-    dispatchRequiredActions(dispatch);
-    try {
-      const res = (await axiosInstance.post(
-        "/auth/forgot-password",
-        formData
-      )) as AxiosResponse<string>;
-      dispatch({
-        type: "AUTH_SUCCESS",
-      });
-      dispatchMessage(dispatch, res.data, "success");
-    } catch (err: any) {
-      dispatch({
-        type: "AUTH_ERROR",
-      });
-      dispatchMessage(dispatch, err.response.data.message, "danger");
-    }
-  };
+    async (dispatch: Dispatch<AuthMessageAction>) => {
+      dispatchRequiredActions(dispatch);
+      try {
+        const res = (await axiosInstance.post(
+          "/auth/forgot-password",
+          formData
+        )) as AxiosResponse<string>;
+        dispatch({
+          type: "AUTH_SUCCESS",
+        });
+        dispatchMessage(dispatch, res.data, "success");
+      } catch (err: any) {
+        dispatch({
+          type: "AUTH_ERROR",
+        });
+        dispatchMessage(dispatch, err.response.data.message, "danger");
+      }
+    };
 
 export const resetPassword =
   (formData: ResetPasswordData) =>
-  async (dispatch: Dispatch<AuthMessageAction>) => {
-    dispatchRequiredActions(dispatch);
-    try {
-      const res = (await axiosInstance.post(
-        `/auth/reset-password/${formData.token}`,
-        { password: formData.password }
-      )) as AxiosResponse<string>;
-      dispatch({
-        type: "AUTH_SUCCESS",
-      });
-      dispatchMessage(dispatch, res.data, "success");
-    } catch (err: any) {
-      dispatch({
-        type: "AUTH_ERROR",
-      });
-      dispatchMessage(dispatch, err.response.data.message, "danger");
-    }
-  };
+    async (dispatch: Dispatch<AuthMessageAction>) => {
+      dispatchRequiredActions(dispatch);
+      try {
+        const res = (await axiosInstance.post(
+          `/auth/reset-password/${formData.token}`,
+          { password: formData.password }
+        )) as AxiosResponse<string>;
+        dispatch({
+          type: "AUTH_SUCCESS",
+        });
+        dispatchMessage(dispatch, res.data, "success");
+      } catch (err: any) {
+        dispatch({
+          type: "AUTH_ERROR",
+        });
+        dispatchMessage(dispatch, err.response.data.message, "danger");
+      }
+    };

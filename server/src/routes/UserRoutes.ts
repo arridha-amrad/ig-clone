@@ -6,6 +6,7 @@ const router = Router();
 
 router.get('/me', verifyAccessToken, userController.me);
 router.get('/:username', userController.findUserAndPostsByUsername);
+router.get('/find/:username', userController.findUsers)
 
 router.put(
   '/update-user-data',

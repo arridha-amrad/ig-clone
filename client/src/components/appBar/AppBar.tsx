@@ -21,8 +21,6 @@ const AppBar: React.FC<AppBarProps> = () => {
     location: { pathname },
   } = useHistory();
 
-  console.log(pathname);
-
   return (
     <>
       <Nav>
@@ -34,17 +32,29 @@ const AppBar: React.FC<AppBarProps> = () => {
             </NavTitle>
             <NavSearch />
             <NavMenu>
-              <NavLink isSolid={pathname === "/home"} to="/home">
-                <i className="fas fa-home"></i>
+              <NavLink to="/home">
+                <Icon
+                  isSolid={pathname === "/home"}
+                  className="fas fa-home"
+                ></Icon>
               </NavLink>
-              <NavLink isSolid={pathname === "/home"} to="/home">
-                <i className="fas fa-compass"></i>
+              <NavLink to="/accounts/change-password">
+                <Icon
+                  isSolid={pathname === "/accounts/change-password"}
+                  className="fas fa-compass"
+                ></Icon>
               </NavLink>
-              <NavLink isSolid={pathname === "/home"} to="/home">
-                <i className="fas fa-heart"></i>
+              <NavLink to="/home">
+                <Icon
+                  isSolid={pathname === "/home"}
+                  className="fas fa-heart"
+                ></Icon>
               </NavLink>
-              <NavLink isSolid={pathname === "/home"} to="/home">
-                <i className="fas fa-home"></i>
+              <NavLink to="/home">
+                <Icon
+                  isSolid={pathname === "/home"}
+                  className="fas fa-home"
+                ></Icon>
               </NavLink>
               <NavbarProfile
                 isFocus={
@@ -157,28 +167,30 @@ export const NavMenu = styled.div`
   }
 `;
 
-interface NavLinkProps {
-  isSolid: boolean;
-}
-
-const NavLink = styled(Link)<NavLinkProps>`
+const NavLink = styled(Link)`
   display: flex;
   align-items: center;
   text-decoration: none;
   cursor: pointer;
   height: 45px;
   width: 45px;
-  i {
-    font-size: 1.4rem;
-    color: ${(props) => (props.isSolid ? "#000" : "transparent")};
-    -webkit-text-stroke-width: ${(props) => (props.isSolid ? "0px" : "1px")};
-    -webkit-text-stroke-color: ${(props) =>
-      props.isSolid ? "transparent" : "#000"};
-  }
+
   img {
     width: 29px;
     height: 29px;
   }
+`;
+
+interface IconProps {
+  isSolid: boolean;
+}
+
+const Icon = styled.i<IconProps>`
+  font-size: 1.4rem;
+  color: ${(props) => (props.isSolid ? "#000" : "transparent")};
+  -webkit-text-stroke-width: ${(props) => (props.isSolid ? "0px" : "1px")};
+  -webkit-text-stroke-color: ${(props) =>
+    props.isSolid ? "transparent" : "#000"};
 `;
 
 interface NavbarProfileProps {

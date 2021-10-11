@@ -16,7 +16,7 @@ const NavDropDown: React.FC<NavDropDownProps> = ({ showDropDown }) => {
   );
   return (
     <NavbarProfileDropDown sc_isShow={showDropDown}>
-      <Menu href={`/${username}`}>
+      <Menu to={`/${username}`}>
         <i className="far fa-user-circle"></i>
         <p>Profile</p>
       </Menu>
@@ -67,7 +67,7 @@ const NavbarProfileDropDown = styled.div<INavDropDown>`
   box-shadow: 0px 0px 10px 0px #ccc;
 `;
 
-const Menu = styled.a`
+const Menu = styled(Link)`
   display: flex;
   align-items: center;
   height: 37px;

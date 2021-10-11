@@ -24,22 +24,23 @@ const dispatchMessage = (
   dispatch(setMessage(message, type));
 };
 
+
 export const changePassword =
   (data: ChangePasswordData) =>
-  async (dispatch: Dispatch<UserMessageAction>) => {
-    dispatchRequiredActions(dispatch);
-    try {
-      const result = (await axiosInstance.put(
-        "/user/change-password",
-        data
-      )) as AxiosResponse<string>;
-      dispatchMessage(dispatch, result.data, "success");
-    } catch (err: any) {
-      dispatchMessage(dispatch, err.response.data.message, "danger");
-    } finally {
-      dispatch({ type: "STOP_LOADING_USER" });
-    }
-  };
+    async (dispatch: Dispatch<UserMessageAction>) => {
+      dispatchRequiredActions(dispatch);
+      try {
+        const result = (await axiosInstance.put(
+          "/user/change-password",
+          data
+        )) as AxiosResponse<string>;
+        dispatchMessage(dispatch, result.data, "success");
+      } catch (err: any) {
+        dispatchMessage(dispatch, err.response.data.message, "danger");
+      } finally {
+        dispatch({ type: "STOP_LOADING_USER" });
+      }
+    };
 
 export const findUserAndPostsByUsername =
   (username: string) => async (dispatch: Dispatch<UserActionsType>) => {

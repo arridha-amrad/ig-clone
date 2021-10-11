@@ -1,10 +1,26 @@
 import { useState } from "react";
 import styled from "styled-components";
+import axiosInstance from "../../utils/AxiosInterceptors";
 import SearchResult from "./SearchResult";
+
+export interface ISearchResult {
+  username: string;
+  imageURL: string;
+  fullName?: string;
+}
 
 const NavSearch = () => {
   const [search, setSearch] = useState("");
   const [searchFocus, setSearchFocus] = useState(false);
+  const [results, setResult] = useState<ISearchResult[]>([]);
+
+  const searchUser = () => {
+    console.log("search for : ", search);
+    axiosInstance
+      .get(`/user/find/${search}`)
+      .then((res) => setResult(res.data))
+      .catch((err) => console.log(err));
+  };
 
   return (
     <NavSearchArea>
@@ -12,6 +28,7 @@ const NavSearch = () => {
         <InputSearch
           onFocus={() => setSearchFocus(true)}
           onBlur={() => setSearchFocus(false)}
+          onKeyUp={searchUser}
           name="search"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -20,7 +37,7 @@ const NavSearch = () => {
         />
         <i className="fas fa-search search"></i>
         <i className="fas fa-times-circle times"></i>
-        {search && <SearchResult />}
+        {search && <SearchResult setSearch={setSearch} results={results} />}
       </Search>
     </NavSearchArea>
   );

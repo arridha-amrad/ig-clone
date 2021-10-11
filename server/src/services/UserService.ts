@@ -28,3 +28,9 @@ export const findUserByIdAndUpdate = async (
 ): Promise<IUserModel | null> => {
   return UserModel.findByIdAndUpdate(id, { ...update }, { new: true });
 };
+
+export const findUsernameLike = async (
+  username: string
+): Promise<IUserModel[]> => {
+  return UserModel.find({ username: { $regex: username, $options: "i" } }, 'username imageURL fullName', { limit: 10 });
+}

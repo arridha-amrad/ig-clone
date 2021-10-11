@@ -50,13 +50,16 @@ const App: React.FC<AppProps> = () => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   useEffect(() => {
+    let mounted = true;
     if (localStorage.getItem("data") === "login") {
       setLoading(true);
       axiosInstance
         .get("/auth/refresh-token")
         .then(() => {
-          dispatch(getLoginUserData());
-          dispatch({ type: SET_AUTHENTICATED });
+          if (mounted) {
+            dispatch(getLoginUserData());
+            dispatch({ type: SET_AUTHENTICATED });
+          }
         })
         .catch((err: any) => {
           console.log(err.response);
@@ -68,6 +71,9 @@ const App: React.FC<AppProps> = () => {
     } else {
       setLoading(false);
     }
+    return () => {
+      mounted = false;
+    };
     // eslint-disable-next-line
   }, []);
 

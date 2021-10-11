@@ -12,6 +12,21 @@ import fs from 'fs';
 import * as PostService from "../services/PostService"
 import { IUserModel } from '../models/UserModel';
 
+export const findUsers = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  const { username } = req.params
+  try {
+    const users = await UserService.findUsernameLike(username)
+    res.status(200).send(users)
+  } catch (err) {
+    console.log(err)
+    next(new ServerErrorException())
+  }
+}
+
 export const findUserAndPostsByUsername = async (
   req: Request,
   res: Response,
@@ -69,6 +84,7 @@ export const updateUserData = async (
       const result = authenticatedUserDataMapper(updateResult);
       res.status(200).send(result)
     }
+    // eslint-disable-next-line
   } catch (err: any) {
     console.log(err);
     if (err.keyPattern.username > 0) {

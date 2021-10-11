@@ -6,17 +6,22 @@ import UserFooter from "../footer/UserFooter";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/Store";
-import { useLocation } from "react-router";
 import { useDispatch } from "react-redux";
 import { findUserAndPostsByUsername } from "../../../redux/reduxActions/UserActions";
 import { ProfilePageData } from "../../../dto/UserDTO";
 import { uploadAvatar } from "../../../redux/reduxActions/AuthActions";
 import MainWrapper from "../../../components/MainWrapper";
+import Loading from "../../Loading";
+import { useLocation } from "react-router-dom";
+import axiosInstance from "../../../utils/AxiosInterceptors";
+import { AxiosResponse } from "axios";
 
-interface UserContainerProps {}
+interface UserContainerProps {
+  children: React.ReactNode;
+}
 
 const UserContainer: React.FC<UserContainerProps> = ({ children }) => {
-  const [data, setData] = useState<ProfilePageData>({
+  const [userData, setUserData] = useState<ProfilePageData>({
     bio: "",
     username: "",
     isAuthenticatedUser: false,
@@ -28,28 +33,38 @@ const UserContainer: React.FC<UserContainerProps> = ({ children }) => {
     imageURL: "",
   });
 
-  const { authenticatedUser } = useSelector((state: RootState) => state.auth);
-  const { user } = useSelector((state: RootState) => state.user);
+  const [loading, setLoading] = useState(false);
 
-  const location = useLocation();
+  const { authenticatedUser, isAuthenticated, loadingAuth } = useSelector(
+    (state: RootState) => state.auth
+  );
+
+  // const { user, loadingUser } = useSelector((state: RootState) => state.user);
+
   const dispatch = useDispatch();
 
+  const { pathname } = useLocation();
+
   useEffect(() => {
-    dispatch(findUserAndPostsByUsername(location.pathname));
-    setData({
-      ...data,
-      bio: user.bio,
-      username: user.username,
-      fullName: user.fullName,
-      isAuthenticatedUser: false,
-      totalFollowers: user.followers,
-      totalFollowings: user.followings,
-      totalPosts: 0,
-      website: user.website,
-      imageURL: user.imageURL,
-    });
+    let mounted = true;
+    if (!loadingAuth) {
+      axiosInstance
+        .get(`/user${pathname}`)
+        .then((res: AxiosResponse<ProfilePageData>) => {
+          if (mounted) {
+            setUserData({
+              ...userData,
+              ...res.data,
+            });
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+    return () => {
+      mounted = false;
+    };
     // eslint-disable-next-line
-  }, []);
+  }, [location.pathname, loadingAuth]);
 
   const inputFileRef = useRef<HTMLInputElement>(null);
 
@@ -62,78 +77,83 @@ const UserContainer: React.FC<UserContainerProps> = ({ children }) => {
     formData.append("avatarFile", file);
     dispatch(uploadAvatar(formData));
   };
-  return (
-    <>
-      <MainWrapper>
-        <ProfileContainer>
-          <Header>
-            <AccountWrapper>
-              <AvatarWrapper
-                onClick={
-                  data.username === authenticatedUser.username
-                    ? openInputFile
-                    : undefined
-                }
-              >
-                <AccountAvatar
-                  src={
-                    data.username === authenticatedUser.username
-                      ? authenticatedUser.imageURL
-                      : data.imageURL
+
+  if (loading) {
+    return <Loading />;
+  } else {
+    return (
+      <>
+        <MainWrapper>
+          <ProfileContainer>
+            <Header>
+              <AccountWrapper>
+                <AvatarWrapper
+                  onClick={
+                    userData.username === authenticatedUser.username
+                      ? openInputFile
+                      : undefined
                   }
-                  alt="profile"
-                />
-                <input
-                  ref={inputFileRef}
-                  type="file"
-                  name="avatarFile"
-                  id="fileInput"
-                  hidden={true}
-                  onChange={handleImageChange}
-                />
-              </AvatarWrapper>
-              <AccountDataWrapper>
-                <AccountData
-                  isAuthenticatedUser={
-                    data.username === authenticatedUser.username
-                  }
-                  data={data}
-                />
-              </AccountDataWrapper>
-            </AccountWrapper>
+                >
+                  <AccountAvatar
+                    src={
+                      userData.username === authenticatedUser.username
+                        ? authenticatedUser.imageURL
+                        : userData.imageURL
+                    }
+                    alt="profile"
+                  />
+                  <input
+                    ref={inputFileRef}
+                    type="file"
+                    name="avatarFile"
+                    id="fileInput"
+                    hidden={true}
+                    onChange={handleImageChange}
+                  />
+                </AvatarWrapper>
+                <AccountDataWrapper>
+                  <AccountData
+                    isAuthenticatedUser={
+                      userData.username === authenticatedUser.username
+                    }
+                    data={userData}
+                  />
+                </AccountDataWrapper>
+              </AccountWrapper>
 
-            {/* This line appears for min-width 736px */}
-            <AccountWrapper2>
-              <Name>{data.fullName}</Name>
-              <Bio>{data.bio}</Bio>
-              <Web>{data.website}</Web>
-            </AccountWrapper2>
+              {/* This line appears for min-width 736px */}
+              <AccountWrapper2>
+                <Name>{userData.fullName}</Name>
+                <Bio>{userData.bio}</Bio>
+                <Web>{userData.website}</Web>
+              </AccountWrapper2>
 
-            <PostFollowerFollowingArea2>
-              <PostFoll2>
-                <Total2>{data.totalPosts}</Total2>
-                <Menu2>Posts</Menu2>
-              </PostFoll2>
-              <PostFoll2>
-                <Total2>{data.totalFollowers}</Total2>
-                <Menu2>Followers</Menu2>
-              </PostFoll2>
-              <PostFoll2>
-                <Total2>{data.totalFollowings}</Total2>
-                <Menu2>Followings</Menu2>
-              </PostFoll2>
-            </PostFollowerFollowingArea2>
-            {/* This line appears for min-width 736px */}
-          </Header>
+              <PostFollowerFollowingArea2>
+                <PostFoll2>
+                  <Total2>{userData.totalPosts}</Total2>
+                  <Menu2>Posts</Menu2>
+                </PostFoll2>
+                <PostFoll2>
+                  <Total2>{userData.totalFollowers}</Total2>
+                  <Menu2>Followers</Menu2>
+                </PostFoll2>
+                <PostFoll2>
+                  <Total2>{userData.totalFollowings}</Total2>
+                  <Menu2>Followings</Menu2>
+                </PostFoll2>
+              </PostFollowerFollowingArea2>
+              {/* This line appears for min-width 736px */}
+            </Header>
 
-          <HorizontalLine />
-          <ProfileMenus data={data} />
-          {children}
-          <UserFooter />
-        </ProfileContainer>
-      </MainWrapper>
-    </>
-  );
+            <HorizontalLine />
+            <ProfileMenus data={userData} />
+            {children}
+            <UserFooter />
+          </ProfileContainer>
+        </MainWrapper>
+      </>
+    );
+  }
 };
 
 export default UserContainer;
