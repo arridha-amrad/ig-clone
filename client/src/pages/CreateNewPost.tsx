@@ -1,10 +1,23 @@
-import { useRef, useState, useEffect, FormEvent } from "react";
+import { useRef, useState, useEffect, FormEvent, ChangeEvent } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router";
 import styled from "styled-components";
+import {
+  LOADING_POST,
+  STOP_LOADING_POST,
+} from "../redux/reduxTypes/PostActionType";
+import { RootState } from "../redux/Store";
+import axiosInstance from "../utils/AxiosInterceptors";
 
 const CreateNewPost = () => {
   const [image, setImage] = useState<File | null>(null);
   const [preview, setPreview] = useState<string>("");
   const fileRef = useRef<HTMLInputElement>(null);
+  const [description, setDescription] = useState("");
+  const dispatch = useDispatch();
+  const { loadingPost } = useSelector((state: RootState) => state.post);
+  const { authenticatedUser } = useSelector((state: RootState) => state.auth);
+  const history = useHistory();
 
   const handleFileChange = (e: any) => {
     const file = e.target?.files[0];
@@ -31,6 +44,19 @@ const CreateNewPost = () => {
     const formData = new FormData();
     if (image) {
       formData.append("imageFile", image);
+      formData.append("description", description);
+      dispatch({ type: LOADING_POST });
+      axiosInstance
+        .post("/post", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            history.push(`/${authenticatedUser.username}`);
+          }
+        })
+        .catch((err) => console.log(err))
+        .finally(() => dispatch({ type: STOP_LOADING_POST }));
     }
   };
 
@@ -48,8 +74,16 @@ const CreateNewPost = () => {
             onChange={handleFileChange}
           />
         </ImagePreviewWrapper>
-        <PostDescription placeholder="description..." />
-        <Button>Submit</Button>
+        <PostDescription
+          value={description}
+          onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+            setDescription(e.target.value)
+          }
+          placeholder="description..."
+        />
+        <Button disabled={!image || loadingPost}>
+          {loadingPost ? "loading..." : "Submit"}
+        </Button>
       </form>
     </Container>
   );
@@ -99,4 +133,8 @@ const Button = styled.button`
   cursor: pointer;
   font-size: 1rem;
   border-radius: 5px;
+  :disabled {
+    background-color: var(--veryLightBlue);
+    cursor: unset;
+  }
 `;

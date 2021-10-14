@@ -14,39 +14,43 @@ const UserPost: React.FC<UserPostProps> = () => {
 
   const { loadingPost, posts } = useSelector((state: RootState) => state.post);
 
-  if (!loadingPost) {
-    console.log("posts : ", posts);
-  }
-
   return (
     <UserContainer>
-      <PostGrid>
-        {isShow && (
-          <MyModalPost isShow={isShow} setShow={setShow} imageURL={imageShow} />
-        )}
-        {posts.map((post, index) => (
-          <Fragment key={index}>
-            <PostWrapper
-              onClick={() => {
-                setShow(true);
-                setImageShow(post.imageURL);
-              }}
-            >
-              <CommentLikeWrapper>
-                <Likes className="on-hover">
-                  <i aria-hidden className="fas fa-heart"></i>
-                  {post.likes.length}
-                </Likes>
-                <Comment className="on-hover">
-                  <i aria-hidden className="fas fa-comment"></i>
-                  {post.comments.length}
-                </Comment>
-              </CommentLikeWrapper>
-              <PostImg src={post.imageURL} />
-            </PostWrapper>
-          </Fragment>
-        ))}
-      </PostGrid>
+      {loadingPost ? (
+        <p>loading...</p>
+      ) : (
+        <PostGrid>
+          {isShow && (
+            <MyModalPost
+              isShow={isShow}
+              setShow={setShow}
+              imageURL={imageShow}
+            />
+          )}
+          {posts.map((post, index) => (
+            <Fragment key={index}>
+              <PostWrapper
+                onClick={() => {
+                  setShow(true);
+                  setImageShow(post.imageURL);
+                }}
+              >
+                <CommentLikeWrapper>
+                  <Likes className="on-hover">
+                    <i aria-hidden className="fas fa-heart"></i>
+                    {post.likes.length}
+                  </Likes>
+                  <Comment className="on-hover">
+                    <i aria-hidden className="fas fa-comment"></i>
+                    {post.comments.length}
+                  </Comment>
+                </CommentLikeWrapper>
+                <PostImg src={post.imageURL} />
+              </PostWrapper>
+            </Fragment>
+          ))}
+        </PostGrid>
+      )}
     </UserContainer>
   );
 };

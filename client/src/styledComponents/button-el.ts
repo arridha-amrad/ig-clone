@@ -24,7 +24,7 @@ export const Button = styled.button<ButtonProps>`
   cursor: pointer;
   &:disabled {
     cursor: unset;
-    background: #b8defb;
+    background-color: var(--veryLightBlue);
   }
 `;
 

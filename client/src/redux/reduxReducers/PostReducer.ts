@@ -1,4 +1,4 @@
-import { PostActionTypes } from "../reduxTypes/PostActionType"
+import { PostActionTypes } from "../reduxTypes/PostActionType";
 
 interface ILike {
   _id: string;
@@ -11,7 +11,7 @@ export interface IPost {
   user: string;
   imageURL: string;
   description: string;
-  location?: string
+  location?: string;
   likes: ILike[];
   comments: string[];
   createdAt: Date;
@@ -19,14 +19,14 @@ export interface IPost {
 }
 
 export interface PostState {
-  posts: IPost[]
-  loadingPost: boolean
+  posts: IPost[];
+  loadingPost: boolean;
 }
 
 const initialState: PostState = {
   loadingPost: false,
-  posts: []
-}
+  posts: [],
+};
 
 const PostReducer = (
   state = initialState,
@@ -37,16 +37,21 @@ const PostReducer = (
       return {
         ...state,
         loadingPost: true,
-      }
+      };
     case "SET_POSTS":
       return {
         ...state,
         posts: [...action.payload],
-        loadingPost: false
-      }
+        loadingPost: false,
+      };
+    case "STOP_LOADING_POST":
+      return {
+        ...state,
+        loadingPost: false,
+      };
     default:
-      return state
+      return state;
   }
-}
+};
 
 export default PostReducer;

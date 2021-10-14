@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import AccountData from "../details/UserDetails";
 import ProfileMenus from "../menu/Menu";
 import { ProfileContainer, HorizontalLine } from "./userContainer.elements";
@@ -8,16 +8,16 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/Store";
 import { useDispatch } from "react-redux";
 import { ProfilePageData } from "../../../dto/UserDTO";
-import { uploadAvatar } from "../../../redux/reduxActions/AuthActions";
 import MainWrapper from "../../../components/MainWrapper";
 import Loading from "../../Loading";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axiosInstance from "../../../utils/AxiosInterceptors";
 import { AxiosResponse } from "axios";
 import {
   LOADING_POST,
   SET_POSTS,
 } from "../../../redux/reduxTypes/PostActionType";
+import Avatar from "../../Avatar";
 
 interface UserContainerProps {
   children: React.ReactNode;
@@ -75,18 +75,6 @@ const UserContainer: React.FC<UserContainerProps> = ({ children }) => {
     // eslint-disable-next-line
   }, [location.pathname]);
 
-  const inputFileRef = useRef<HTMLInputElement>(null);
-
-  const openInputFile = () => {
-    inputFileRef.current?.click();
-  };
-  const handleImageChange = (e: any) => {
-    const file = e.target?.files[0];
-    const formData = new FormData();
-    formData.append("avatarFile", file);
-    dispatch(uploadAvatar(formData));
-  };
-
   if (loading) {
     return <Loading />;
   } else {
@@ -96,30 +84,10 @@ const UserContainer: React.FC<UserContainerProps> = ({ children }) => {
           <ProfileContainer>
             <Header>
               <AccountWrapper>
-                <AvatarWrapper
-                  onClick={
-                    userData.username === authenticatedUser.username
-                      ? openInputFile
-                      : undefined
-                  }
-                >
-                  <AccountAvatar
-                    src={
-                      userData.username === authenticatedUser.username
-                        ? authenticatedUser.imageURL
-                        : userData.imageURL
-                    }
-                    alt="profile"
-                  />
-                  <input
-                    ref={inputFileRef}
-                    type="file"
-                    name="avatarFile"
-                    id="fileInput"
-                    hidden={true}
-                    onChange={handleImageChange}
-                  />
-                </AvatarWrapper>
+                <Avatar
+                  username={userData.username}
+                  imageURL={userData.imageURL}
+                />
                 <AccountDataWrapper>
                   <AccountData
                     isAuthenticatedUser={
@@ -203,30 +171,6 @@ const Web = styled.p`
   font-weight: 600;
   color: #00376b;
   display: block;
-`;
-
-const AvatarWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: start;
-
-  @media (min-width: 736px) {
-    justify-content: center;
-  }
-`;
-
-const AccountAvatar = styled.img`
-  height: 75px;
-  width: 75px;
-  object-fit: cover;
-  border-radius: 50%;
-  margin-right: 20px;
-
-  @media (min-width: 736px) {
-    height: 150px;
-    width: 150px;
-  }
 `;
 
 const AccountDataWrapper = styled.div`
