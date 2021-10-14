@@ -77,13 +77,13 @@ const ProfileData: React.FC<ProfileDataProps> = ({
 
       <PostFollowersFollowingsArea>
         <Post>
-          <span>{data.totalPosts}</span> post
+          <span>{data.posts.length}</span> post
         </Post>
         <Followers>
-          <span>{data.totalFollowers}</span> followers
+          <span>{data.followers}</span> followers
         </Followers>
         <Followings>
-          <span>{data.totalFollowings}</span> followings
+          <span>{data.followings}</span> followings
         </Followings>
       </PostFollowersFollowingsArea>
 

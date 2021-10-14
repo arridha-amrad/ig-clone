@@ -2,7 +2,10 @@ import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
 const baseURL = process.env.REACT_APP_SERVER_URL;
 
+export const axiosSource = axios.CancelToken.source()
+
 const axiosInstance = axios.create({
+  cancelToken: axiosSource.token,
   baseURL: baseURL,
   withCredentials: true,
 });

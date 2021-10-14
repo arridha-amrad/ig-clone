@@ -1,7 +1,7 @@
 import React from "react";
 import UserContainer from "../../components/user/container/UserContainer";
 
-interface ProfileIGTVProps { }
+interface ProfileIGTVProps {}
 
 const UserIGTV: React.FC<ProfileIGTVProps> = () => {
   return (

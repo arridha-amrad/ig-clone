@@ -53,7 +53,7 @@ const AppBar: React.FC<AppBarProps> = () => {
                 ></Icon>
               </NavLink>
 
-              <NavLink to="/account/edit-profile">
+              <NavLink to="/accounts/edit">
                 <Icon
                   isSolid={pathname === "/accounts/edit"}
                   className="fas fa-heart"

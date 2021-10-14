@@ -20,7 +20,7 @@ import UserSaved from "./pages/user/UserSaved";
 import UserIGTV from "./pages/user/UserIGTV";
 import UserPost from "./pages/user/UserPosts";
 import Home from "./pages/Home";
-import axiosInstance from "./utils/AxiosInterceptors";
+import axiosInstance, { axiosSource } from "./utils/AxiosInterceptors";
 import { useDispatch } from "react-redux";
 import { getLoginUserData } from "./redux/reduxActions/AuthActions";
 import Loading from "./components/Loading";
@@ -71,7 +71,7 @@ const App: React.FC<AppProps> = () => {
     } else {
       setLoading(false);
     }
-    return () => {
+    return function cleanup() {
       mounted = false;
     };
     // eslint-disable-next-line

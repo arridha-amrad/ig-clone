@@ -13,9 +13,8 @@ interface PostData {
 export interface ProfilePageData {
   username: string;
   isAuthenticatedUser: boolean;
-  totalPosts: number;
-  totalFollowers: number;
-  totalFollowings: number;
+  followers: number;
+  followings: number;
   fullName: string;
   bio: string;
   website: string;

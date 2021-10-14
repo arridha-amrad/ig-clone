@@ -11,9 +11,13 @@ import { ProfilePageData } from "../../../dto/UserDTO";
 import { uploadAvatar } from "../../../redux/reduxActions/AuthActions";
 import MainWrapper from "../../../components/MainWrapper";
 import Loading from "../../Loading";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import axiosInstance from "../../../utils/AxiosInterceptors";
 import { AxiosResponse } from "axios";
+import {
+  LOADING_POST,
+  SET_POSTS,
+} from "../../../redux/reduxTypes/PostActionType";
 
 interface UserContainerProps {
   children: React.ReactNode;
@@ -24,9 +28,8 @@ const UserContainer: React.FC<UserContainerProps> = ({ children }) => {
     bio: "",
     username: "",
     isAuthenticatedUser: false,
-    totalPosts: 0,
-    totalFollowers: 0,
-    totalFollowings: 0,
+    followers: 0,
+    followings: 0,
     fullName: "",
     website: "",
     imageURL: "",
@@ -35,20 +38,20 @@ const UserContainer: React.FC<UserContainerProps> = ({ children }) => {
 
   const [loading, setLoading] = useState(false);
 
-  const { authenticatedUser, loadingAuth } = useSelector(
+  const params = useParams<{ username: string }>();
+
+  const { authenticatedUser, isBlocked } = useSelector(
     (state: RootState) => state.auth
   );
 
   const dispatch = useDispatch();
 
-  const { pathname } = useLocation();
-
   useEffect(() => {
     let mounted = true;
-    if (!loadingAuth) {
-      setLoading(true);
+    setLoading(true);
+    if (!isBlocked) {
       axiosInstance
-        .get(`/user${pathname}`)
+        .get(`/user/${params.username}`)
         .then((res: AxiosResponse<ProfilePageData>) => {
           if (mounted) {
             setUserData({
@@ -56,16 +59,21 @@ const UserContainer: React.FC<UserContainerProps> = ({ children }) => {
               ...res.data,
               posts: res.data.posts,
             });
+            dispatch({ type: LOADING_POST });
+            dispatch({
+              type: SET_POSTS,
+              payload: res.data.posts,
+            });
           }
         })
         .catch((err) => console.log(err))
         .finally(() => setLoading(false));
     }
-    return () => {
+    return function cleanup() {
       mounted = false;
     };
     // eslint-disable-next-line
-  }, [location.pathname, loadingAuth]);
+  }, [location.pathname]);
 
   const inputFileRef = useRef<HTMLInputElement>(null);
 
@@ -131,15 +139,15 @@ const UserContainer: React.FC<UserContainerProps> = ({ children }) => {
 
               <PostFollowerFollowingArea2>
                 <PostFoll2>
-                  <Total2>{userData.totalPosts}</Total2>
+                  <Total2>{userData.posts.length}</Total2>
                   <Menu2>Posts</Menu2>
                 </PostFoll2>
                 <PostFoll2>
-                  <Total2>{userData.totalFollowers}</Total2>
+                  <Total2>{userData.followers}</Total2>
                   <Menu2>Followers</Menu2>
                 </PostFoll2>
                 <PostFoll2>
-                  <Total2>{userData.totalFollowings}</Total2>
+                  <Total2>{userData.followings}</Total2>
                   <Menu2>Followings</Menu2>
                 </PostFoll2>
               </PostFollowerFollowingArea2>

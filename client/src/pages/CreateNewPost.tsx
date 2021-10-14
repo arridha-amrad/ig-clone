@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, FormEvent } from "react";
 import styled from "styled-components";
 
 const CreateNewPost = () => {
@@ -26,11 +26,17 @@ const CreateNewPost = () => {
     }
   }, [image]);
 
-  console.log("preview : ", preview);
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData();
+    if (image) {
+      formData.append("imageFile", image);
+    }
+  };
 
   return (
     <Container>
-      <form>
+      <form onSubmit={handleSubmit}>
         <ImagePreviewWrapper onClick={() => fileRef.current?.click()}>
           {preview !== "" ? <Image src={preview} alt="post" /> : "Add Image"}
           <input

@@ -2,6 +2,7 @@ import { AuthenticatedUserData } from "../../dto/AuthDTO";
 import { AuthActionsType } from "../reduxTypes/AuthTypes";
 
 export interface AuthState {
+  isBlocked: boolean;
   loadingAuth: boolean;
   isAuthenticated: boolean;
   isRedirectToLoginPage: boolean;
@@ -10,6 +11,7 @@ export interface AuthState {
 }
 
 const initialState: AuthState = {
+  isBlocked: true,
   loadingAuth: false,
   isAuthenticated: false,
   requestStatus: undefined,
@@ -77,6 +79,7 @@ const AuthReducer = (
         ...state,
         isAuthenticated: true,
         loadingAuth: false,
+        isBlocked: false,
       };
     case "LOADING_AUTH":
       return {
@@ -94,6 +97,7 @@ const AuthReducer = (
         requestStatus: true,
         loadingAuth: false,
         isAuthenticated: true,
+        isBlocked: false,
       };
     case "AUTH_SUCCESS":
       return {
@@ -111,6 +115,7 @@ const AuthReducer = (
       return {
         ...state,
         isAuthenticated: false,
+        isBlocked: false,
       };
     case "LOGOUT":
       return {

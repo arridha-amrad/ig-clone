@@ -2,6 +2,7 @@ import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import thunkMiddleware from "redux-thunk";
 import AuthReducer from "./reduxReducers/AuthReducer";
 import { MessageReducer } from "./reduxReducers/MessageReducer";
+import PostReducer from "./reduxReducers/PostReducer";
 import UserReducer from "./reduxReducers/UserReducer";
 
 const initialState = {};
@@ -12,6 +13,7 @@ const reducers = combineReducers({
   auth: AuthReducer,
   user: UserReducer,
   message: MessageReducer,
+  post: PostReducer
 });
 
 export type RootState = ReturnType<typeof reducers>;
