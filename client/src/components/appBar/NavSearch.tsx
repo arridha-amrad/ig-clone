@@ -15,7 +15,6 @@ const NavSearch = () => {
   const [results, setResult] = useState<ISearchResult[]>([]);
 
   const searchUser = () => {
-    console.log("search for : ", search);
     axiosInstance
       .get(`/user/find/${search}`)
       .then((res) => setResult(res.data))

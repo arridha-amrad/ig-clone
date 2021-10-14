@@ -1,16 +1,26 @@
 import React from "react";
-import { Profile, ProfileContainer, ProfileImg, ProfileInfo } from "./homeProfile.elements";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/Store";
+import {
+  Profile,
+  ProfileContainer,
+  ProfileImg,
+  ProfileInfo,
+} from "./homeProfile.elements";
 
-interface HomeProfileProps { }
+interface HomeProfileProps {}
 
 const HomeProfile: React.FC<HomeProfileProps> = () => {
+  const { username, imageURL, fullName } = useSelector(
+    (state: RootState) => state.auth.authenticatedUser
+  );
   return (
     <ProfileContainer>
       <Profile>
-        <ProfileImg src="https://deadline.com/wp-content/uploads/2016/05/spongebob.jpg?w=600&h=383&crop=1" />
+        <ProfileImg src={imageURL} alt="avatar" />
         <ProfileInfo>
-          <div>spongebob</div>
-          <p>square_pants</p>
+          <div>{username}</div>
+          <p>{fullName}</p>
         </ProfileInfo>
       </Profile>
       <div className="switch">Switch</div>

@@ -38,24 +38,28 @@ const AppBar: React.FC<AppBarProps> = () => {
                   className="fas fa-home"
                 ></Icon>
               </NavLink>
+
               <NavLink to="/accounts/change-password">
                 <Icon
                   isSolid={pathname === "/accounts/change-password"}
                   className="fas fa-compass"
                 ></Icon>
               </NavLink>
+
               <NavLink to="/home">
                 <Icon
-                  isSolid={pathname === "/home"}
+                  isSolid={pathname === "/message"}
+                  className="fas fa-paper-plane"
+                ></Icon>
+              </NavLink>
+
+              <NavLink to="/account/edit-profile">
+                <Icon
+                  isSolid={pathname === "/accounts/edit"}
                   className="fas fa-heart"
                 ></Icon>
               </NavLink>
-              <NavLink to="/home">
-                <Icon
-                  isSolid={pathname === "/home"}
-                  className="fas fa-home"
-                ></Icon>
-              </NavLink>
+
               <NavbarProfile
                 isFocus={
                   pathname === "/profile/post" ||

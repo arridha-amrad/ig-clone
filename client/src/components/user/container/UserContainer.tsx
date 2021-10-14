@@ -7,7 +7,6 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/Store";
 import { useDispatch } from "react-redux";
-import { findUserAndPostsByUsername } from "../../../redux/reduxActions/UserActions";
 import { ProfilePageData } from "../../../dto/UserDTO";
 import { uploadAvatar } from "../../../redux/reduxActions/AuthActions";
 import MainWrapper from "../../../components/MainWrapper";
@@ -31,15 +30,14 @@ const UserContainer: React.FC<UserContainerProps> = ({ children }) => {
     fullName: "",
     website: "",
     imageURL: "",
+    posts: [],
   });
 
   const [loading, setLoading] = useState(false);
 
-  const { authenticatedUser, isAuthenticated, loadingAuth } = useSelector(
+  const { authenticatedUser, loadingAuth } = useSelector(
     (state: RootState) => state.auth
   );
-
-  // const { user, loadingUser } = useSelector((state: RootState) => state.user);
 
   const dispatch = useDispatch();
 
@@ -48,6 +46,7 @@ const UserContainer: React.FC<UserContainerProps> = ({ children }) => {
   useEffect(() => {
     let mounted = true;
     if (!loadingAuth) {
+      setLoading(true);
       axiosInstance
         .get(`/user${pathname}`)
         .then((res: AxiosResponse<ProfilePageData>) => {
@@ -55,10 +54,12 @@ const UserContainer: React.FC<UserContainerProps> = ({ children }) => {
             setUserData({
               ...userData,
               ...res.data,
+              posts: res.data.posts,
             });
           }
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err))
+        .finally(() => setLoading(false));
     }
     return () => {
       mounted = false;

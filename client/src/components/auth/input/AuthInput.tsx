@@ -24,11 +24,11 @@ const AuthInput: React.FC<AuthInputProps> = ({
   error,
   type,
   handleChange,
-  onKeyUp = undefined,
-  onBlur = undefined,
   isWithValidation = false,
   autoComplete = "on",
   validationResult,
+  onKeyUp = undefined,
+  onBlur = undefined,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -103,7 +103,7 @@ const InValidIcon = styled.i`
   color: var(--red);
 `;
 
-export const InputField = styled.div`
+const InputField = styled.div`
   display: flex;
   align-items: center;
   background-color: var(--greyBG);
@@ -117,7 +117,7 @@ export const InputField = styled.div`
 interface InputProps {
   isFloat: boolean;
 }
-export const Input = styled.input<InputProps>`
+const Input = styled.input<InputProps>`
   height: 100%;
   z-index: 0;
   display: flex;
@@ -139,7 +139,7 @@ export const Input = styled.input<InputProps>`
 interface LabelProps {
   isFloat: boolean;
 }
-export const Label = styled.label<LabelProps>`
+const Label = styled.label<LabelProps>`
   position: absolute;
   cursor: text;
   left: 11px;
@@ -151,14 +151,14 @@ export const Label = styled.label<LabelProps>`
   user-select: none;
 `;
 
-export const InputWarning = styled.div`
+const InputWarning = styled.div`
   display: block;
   text-align: end;
   font-size: 0.8rem;
   color: red;
 `;
 
-export const PasswordToggler = styled.div`
+const PasswordToggler = styled.div`
   font-weight: 700;
   z-index: 99;
   border: none;

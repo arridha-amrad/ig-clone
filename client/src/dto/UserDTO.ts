@@ -3,6 +3,13 @@ export interface ChangePasswordData {
   newPassword: string;
 }
 
+interface PostData {
+  id: string;
+  imageURL: string;
+  totalLikes: number;
+  totalComments: number;
+}
+
 export interface ProfilePageData {
   username: string;
   isAuthenticatedUser: boolean;
@@ -13,4 +20,5 @@ export interface ProfilePageData {
   bio: string;
   website: string;
   imageURL: string;
+  posts: PostData[];
 }
