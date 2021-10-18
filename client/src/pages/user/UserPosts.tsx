@@ -1,17 +1,13 @@
-import React, { useState } from "react";
-import { Fragment } from "react";
-import MyModalPost from "../../components/user/modal/post/PostModal";
+import React from "react";
 import UserContainer from "../../components/user/container/UserContainer";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/Store";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 interface UserPostProps {}
 
 const UserPost: React.FC<UserPostProps> = () => {
-  const [isShow, setShow] = useState(false);
-  const [imageShow, setImageShow] = useState("");
-
   const { loadingPost, posts } = useSelector((state: RootState) => state.post);
 
   return (
@@ -20,21 +16,9 @@ const UserPost: React.FC<UserPostProps> = () => {
         <p>loading...</p>
       ) : (
         <PostGrid>
-          {isShow && (
-            <MyModalPost
-              isShow={isShow}
-              setShow={setShow}
-              imageURL={imageShow}
-            />
-          )}
-          {posts.map((post, index) => (
-            <Fragment key={index}>
-              <PostWrapper
-                onClick={() => {
-                  setShow(true);
-                  setImageShow(post.imageURL);
-                }}
-              >
+          {posts.map((post) => (
+            <Link key={post._id} to={`/post/${post._id}`}>
+              <PostWrapper>
                 <CommentLikeWrapper>
                   <Likes className="on-hover">
                     <i aria-hidden className="fas fa-heart"></i>
@@ -47,7 +31,7 @@ const UserPost: React.FC<UserPostProps> = () => {
                 </CommentLikeWrapper>
                 <PostImg src={post.imageURL} />
               </PostWrapper>
-            </Fragment>
+            </Link>
           ))}
         </PostGrid>
       )}

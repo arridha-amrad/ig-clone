@@ -20,16 +20,19 @@ import UserSaved from "./pages/user/UserSaved";
 import UserIGTV from "./pages/user/UserIGTV";
 import UserPost from "./pages/user/UserPosts";
 import Home from "./pages/Home";
-import axiosInstance, { axiosSource } from "./utils/AxiosInterceptors";
+import axiosInstance from "./utils/AxiosInterceptors";
 import { useDispatch } from "react-redux";
 import { getLoginUserData } from "./redux/reduxActions/AuthActions";
 import Loading from "./components/Loading";
 import {
+  LOADING_AUTH,
   SET_AUTHENTICATED,
   SET_UNAUTHENTICATED,
+  STOP_LOADING_AUTH,
 } from "./redux/reduxTypes/AuthTypes";
 import SecureRoute from "./components/SecureRoute";
 import CreateNewPost from "./pages/CreateNewPost";
+import PostDetail from "./pages/PostDetail";
 
 interface AppProps {}
 
@@ -96,6 +99,7 @@ const App: React.FC<AppProps> = () => {
               component={CreateNewPost}
             />
             <SecureRoute exact path="/home" component={Home} />
+            <SecureRoute exact path="/post/:postId" component={PostDetail} />
             <SecureRoute exact path="/:username" component={UserPost} />
             <SecureRoute exact path="/:username/igtv" component={UserIGTV} />
             <SecureRoute exact path="/:username/saved" component={UserSaved} />

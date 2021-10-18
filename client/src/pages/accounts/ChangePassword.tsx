@@ -1,15 +1,14 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AccountContainer from "../../components/AccountContainer";
-import AccountButton from "../../components/accounts/form/button";
-import AccountInput from "../../components/accounts/form/input";
-import AccountLink from "../../components/accounts/form/link";
+import AccountButton from "../../components/AccountButton";
 import AccountProfile from "../../components/AccountProfile";
 import MyAlert from "../../components/MyAlert";
 import { ChangePasswordData } from "../../dto/UserDTO";
 import { changePassword } from "../../redux/reduxActions/UserActions";
 import { RootState } from "../../redux/Store";
 import { regExpPassword } from "../../validators/AuthValidator";
+import AccountInput from "../../components/InlineInput";
 
 interface ChangePasswordProps {}
 
@@ -125,7 +124,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = () => {
           value={state.oldPassword}
           name="oldPassword"
           onChange={handleChange}
-          inputSize="big"
+          size="big"
           label="Old Password"
         />
         <AccountInput
@@ -134,7 +133,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = () => {
           type="password"
           value={state.newPassword}
           onChange={handleChange}
-          inputSize="big"
+          size="big"
           label="New Password"
           name="newPassword"
         />
@@ -144,7 +143,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = () => {
           type="password"
           value={state.confirmedPassword}
           onChange={handleChange}
-          inputSize="big"
+          size="big"
           label="Confirm Password"
           name="confirmedPassword"
         />
@@ -157,14 +156,13 @@ const ChangePassword: React.FC<ChangePasswordProps> = () => {
             errors.newPassword !== "" ||
             errors.oldPassword !== ""
           }
-          btnSize="big"
+          size="big"
           text="Change Password"
         />
       </form>
       {messages.map((message) => (
         <MyAlert key={message.id} message={message.text} type={message.type} />
       ))}
-      <AccountLink link="/forgot-password" text="Forgot Password" />
     </AccountContainer>
   );
 };

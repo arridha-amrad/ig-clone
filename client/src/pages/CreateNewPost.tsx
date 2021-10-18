@@ -27,6 +27,7 @@ const CreateNewPost = () => {
       setImage(null);
     }
   };
+
   useEffect(() => {
     if (image) {
       const reader = new FileReader();

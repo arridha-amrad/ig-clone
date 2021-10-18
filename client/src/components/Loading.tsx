@@ -3,11 +3,9 @@ import styled from "styled-components";
 
 const Loaders = () => {
   return (
-    <>
-      <LoaderOverlay>
-        <LoadersIcon src={LoadingIcon} />
-      </LoaderOverlay>
-    </>
+    <LoaderOverlay>
+      <LoadersIcon src={LoadingIcon} />
+    </LoaderOverlay>
   );
 };
 

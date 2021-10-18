@@ -1,7 +1,6 @@
 import { FC } from "react";
 import styled from "styled-components";
 import { VSpacer } from "../styledComponents/spacer-el";
-import { Button } from "./accounts/form/AccountForm.elements";
 import BirthDayCakeIcon from "../icons/birthday-cake.svg";
 import { AuthTitle } from "./AuthPage";
 import { BirthDayState } from "../pages/auth/Register";
@@ -105,7 +104,6 @@ const BirthDayForm: FC<BirthDayFormProps> = ({
             data.year === "--year--" ||
             isLoading
           }
-          aa_isFullWidth={true}
           type="submit"
         >
           {isLoading ? "loading..." : "Next"}
@@ -115,6 +113,17 @@ const BirthDayForm: FC<BirthDayFormProps> = ({
     </>
   );
 };
+
+const Button = styled.button`
+  width: 100%;
+  background-color: var(--lightBlue);
+  color: #fff;
+  border: none;
+  outline: none;
+  :disabled {
+    background-color: var(--veryLightBlue);
+  }
+`;
 
 const FormContainer = styled.div`
   display: flex;

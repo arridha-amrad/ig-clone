@@ -1,16 +1,8 @@
-import React from "react";
 import { useState } from "react";
-import {
-  AppWebMenu,
-  AppWebSiteContainer,
-  AppWebsiteMenuContainer,
-  HorizontalLine,
-  Info,
-  InfoBold,
-} from "../../components/accounts/accounts.elements";
 import AccountContainer from "../../components/AccountContainer";
+import styled from "styled-components";
 
-interface AppAndWebsitesProps { }
+interface AppAndWebsitesProps {}
 
 interface MyState {
   isActive?: boolean;
@@ -90,3 +82,66 @@ const AppAndWebsites: React.FC<AppAndWebsitesProps> = () => {
 };
 
 export default AppAndWebsites;
+
+const AppWebSiteContainer = styled.div`
+  margin: 68px 50px 38px 68px;
+
+  p {
+    font-size: 28px;
+    font-weight: 300;
+    margin-bottom: 38px;
+  }
+`;
+
+const AppWebsiteMenuContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-bottom: 1rem;
+  position: relative;
+`;
+
+interface AppMenuProps {
+  isActive?: boolean;
+}
+
+const AppWebMenu = styled.div<AppMenuProps>`
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  width: 100%;
+  text-align: center;
+  border-bottom: ${(props) => props.isActive && "1px solid #333"};
+  padding-bottom: ${(props) => props.isActive && "16.5px"};
+  z-index: 1;
+  margin-top: ${(props) => (props.isActive ? "0px" : "-16px")};
+`;
+
+const HorizontalLine = styled.div`
+  z-index: 0;
+  position: absolute;
+  top: 35px;
+  width: 100%;
+  height: 1px;
+  background: #eee;
+`;
+
+interface InfoProps {
+  aa_show?: boolean;
+}
+
+const Info = styled.span<InfoProps>`
+  display: ${(props) => (props.aa_show ? "block" : "none")};
+  font-size: 1rem;
+  line-height: 1.4;
+  letter-spacing: 1.5;
+  font-weight: 300;
+  margin-bottom: 40px;
+`;
+
+const InfoBold = styled.h4`
+  color: #aaa;
+  font-size: 1rem;
+  line-height: 1.4;
+  font-weight: 400;
+`;

@@ -1,20 +1,23 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import AccountContainer from "../../components/AccountContainer";
-import AccountButton from "../../components/accounts/form/button";
-import AccountInput from "../../components/accounts/form/input";
+import AccountButton from "../../components/AccountButton";
 import AccountProfile from "../../components/AccountProfile";
 import MyAlert from "../../components/MyAlert";
 import { EditProfileData } from "../../dto/AuthDTO";
 import { updateUserData } from "../../redux/reduxActions/AuthActions";
 import { RootState } from "../../redux/Store";
+import AccountInput from "../../components/InlineInput";
+import AccountTextArea from "../../components/InlineTextArea";
 
 interface EditProfileProps {}
 
 const EditProfile: React.FC<EditProfileProps> = () => {
   document.title = "Edit Profile - Instagram";
 
-  const user = useSelector((state: RootState) => state.auth.authenticatedUser);
+  const { authenticatedUser, loadingAuth, isBlocked } = useSelector(
+    (state: RootState) => state.auth
+  );
 
   const { messages } = useSelector((state: RootState) => state.message);
 
@@ -33,13 +36,13 @@ const EditProfile: React.FC<EditProfileProps> = () => {
   useEffect(() => {
     setStates({
       ...states,
-      email: user.email,
-      username: user.username,
-      fullName: user.fullName,
-      website: user.website,
-      bio: user.bio,
-      phoneNumber: user.phoneNumber,
-      gender: user.gender,
+      email: authenticatedUser.email,
+      username: authenticatedUser.username,
+      fullName: authenticatedUser.fullName,
+      website: authenticatedUser.website,
+      bio: authenticatedUser.bio,
+      phoneNumber: authenticatedUser.phoneNumber,
+      gender: authenticatedUser.gender,
     });
     // eslint-disable-next-line
   }, []);
@@ -61,11 +64,13 @@ const EditProfile: React.FC<EditProfileProps> = () => {
   const { email, username, fullName, website, phoneNumber, bio, gender } =
     states;
 
-  return (
+  return loadingAuth && isBlocked ? (
+    <></>
+  ) : (
     <AccountContainer>
       <AccountProfile
-        username={user.username}
-        imgUrl={user.imageURL}
+        username={authenticatedUser.username}
+        imgUrl={authenticatedUser.imageURL}
         enableChangeProfile={true}
       />
       <form onSubmit={handleSubmit}>
@@ -93,7 +98,7 @@ const EditProfile: React.FC<EditProfileProps> = () => {
           label="Website"
           name="website"
         />
-        <AccountInput
+        <AccountTextArea
           onChange={handleChange}
           value={bio}
           label="Bio"
@@ -104,7 +109,7 @@ const EditProfile: React.FC<EditProfileProps> = () => {
             even if the account is used for a business, a pet or something else.
             This won't be a part of your public profile.
           </p>
-        </AccountInput>
+        </AccountTextArea>
         <AccountInput
           onChange={handleChange}
           value={email}
@@ -126,10 +131,7 @@ const EditProfile: React.FC<EditProfileProps> = () => {
         <AccountButton
           isDisabled={username?.trim() === "" || email?.trim() === ""}
           text="Submit"
-          btnSize="small"
-        >
-          <p>Temporarily disable my account</p>
-        </AccountButton>
+        ></AccountButton>
       </form>
 
       {messages.map((message) => (
