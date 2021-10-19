@@ -19,31 +19,31 @@ export const PostImage = styled.img`
   object-fit: cover;
 `;
 
-export const CardActions = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  height: 40px;
-  padding: 0px 15px;
+// export const CardActions = styled.div`
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   width: 100%;
+//   height: 40px;
+//   padding: 0px 15px;
 
-  img {
-    height: 22px;
-    cursor: pointer;
-  }
-`;
+//   img {
+//     height: 22px;
+//     cursor: pointer;
+//   }
+// `;
 
-export const CoLiSeWrapper = styled.div`
-  display: flex;
-  align-items: center;
+// export const CoLiSeWrapper = styled.div`
+//   display: flex;
+//   align-items: center;
 
-  img {
-    height: 22px;
-    width: 30px;
-    margin-right: 10px;
-    cursor: pointer;
-  }
-`;
+//   img {
+//     height: 22px;
+//     width: 30px;
+//     margin-right: 10px;
+//     cursor: pointer;
+//   }
+// `;
 
 export const CardLikes = styled.div`
   padding: 0px 0px 10px 15px;

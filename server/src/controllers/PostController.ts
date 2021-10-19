@@ -3,7 +3,6 @@ import { UploadedFile } from 'express-fileupload';
 import { HTTP_CODE } from '../enums/HTTP_CODE';
 import Exception from '../exceptions/Exception';
 import ServerErrorException from '../exceptions/ServerErrorException';
-import { responseSuccess } from '../ServerResponse';
 import * as PostService from '../services/PostService';
 import { uploadToCloudinary } from '../utils/FileUploader';
 import * as UserService from '../services/UserService';
