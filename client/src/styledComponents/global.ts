@@ -3,6 +3,7 @@ import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyles = createGlobalStyle`
   :root {
+    --white: #fff;
     --veryLightBlue: #b8defb;
     --lightBlue: #0095F7;
     --darkBlue: #385185;
@@ -23,6 +24,8 @@ export const GlobalStyles = createGlobalStyle`
 
   html, body, #root {
     height: 100%;
+    width: 100%;
+    overflow-x: hidden;
   }
 
   body {

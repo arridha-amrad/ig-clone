@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { ImgStory, ImgStoryWrapper } from "../home/story/story.elements";
 import { ISearchResult } from "./NavSearch";
 import { Link } from "react-router-dom";
+import { ImgStory, ImgStoryWrapper } from "../Story";
 
 interface SearchResultProps {
   results: ISearchResult[];

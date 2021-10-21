@@ -18,7 +18,7 @@ interface InlineInputProps {
   onKeyUp?: KeyboardEventHandler<HTMLInputElement>;
 }
 
-const InlineIput: FC<InlineInputProps> = ({
+const InlineInput: FC<InlineInputProps> = ({
   label,
   name,
   onChange,
@@ -49,7 +49,7 @@ const InlineIput: FC<InlineInputProps> = ({
     </FormGroup>
   );
 };
-export default InlineIput;
+export default InlineInput;
 
 export const ErrorText = styled.p`
   color: red !important;

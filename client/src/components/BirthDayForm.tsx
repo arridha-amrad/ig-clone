@@ -4,6 +4,7 @@ import { VSpacer } from "../styledComponents/spacer-el";
 import BirthDayCakeIcon from "../icons/birthday-cake.svg";
 import { AuthTitle } from "./AuthPage";
 import { BirthDayState } from "../pages/auth/Register";
+import { Button } from "./RegistrationForm";
 
 interface BirthDayFormProps {
   data: BirthDayState;
@@ -113,17 +114,6 @@ const BirthDayForm: FC<BirthDayFormProps> = ({
     </>
   );
 };
-
-const Button = styled.button`
-  width: 100%;
-  background-color: var(--lightBlue);
-  color: #fff;
-  border: none;
-  outline: none;
-  :disabled {
-    background-color: var(--veryLightBlue);
-  }
-`;
 
 const FormContainer = styled.div`
   display: flex;

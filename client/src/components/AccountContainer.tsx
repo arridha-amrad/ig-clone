@@ -3,7 +3,7 @@ import { RESET_MESSAGE } from "../redux/reduxReducers/MessageReducer";
 import store from "../redux/Store";
 import { MyContainer } from "../styledComponents/container-el";
 import { VSpacer } from "../styledComponents/spacer-el";
-import UserFooter from "./user/footer/UserFooter";
+import UserFooter from "./UserFooter";
 import AccountMenu from "./AccountMenu";
 import styled from "styled-components";
 import MainWrapper from "./MainWrapper";

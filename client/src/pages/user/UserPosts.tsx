@@ -1,5 +1,5 @@
 import React from "react";
-import UserContainer from "../../components/user/container/UserContainer";
+import UserContainer from "../../components/UserContainer";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/Store";
 import styled from "styled-components";

@@ -1,7 +1,7 @@
 import React from "react";
-import UserContainer from "../../components/user/container/UserContainer";
+import UserContainer from "../../components/UserContainer";
 
-interface UserSavedProps { }
+interface UserSavedProps {}
 
 const UserSaved: React.FC<UserSavedProps> = () => {
   return (

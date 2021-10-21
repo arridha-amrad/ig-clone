@@ -1,23 +1,20 @@
 import React, { useEffect, useState } from "react";
-import AccountData from "../details/UserDetails";
-import ProfileMenus from "../menu/Menu";
-import { ProfileContainer, HorizontalLine } from "./userContainer.elements";
-import UserFooter from "../footer/UserFooter";
+import AccountData from "./UserInfo";
+import ProfileMenus from "./PostMenu";
+import UserFooter from "./UserFooter";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
-import { RootState } from "../../../redux/Store";
+import { RootState } from "../redux/Store";
 import { useDispatch } from "react-redux";
-import { ProfilePageData } from "../../../dto/UserDTO";
-import MainWrapper from "../../../components/MainWrapper";
-import Loading from "../../Loading";
+import { ProfilePageData } from "../dto/UserDTO";
+import MainWrapper from "./MainWrapper";
+import Loading from "./Loading";
 import { useParams } from "react-router-dom";
-import axiosInstance from "../../../utils/AxiosInterceptors";
+import axiosInstance from "../utils/AxiosInterceptors";
 import { AxiosResponse } from "axios";
-import {
-  LOADING_POST,
-  SET_POSTS,
-} from "../../../redux/reduxTypes/PostActionType";
-import Avatar from "../../Avatar";
+import { LOADING_POST, SET_POSTS } from "../redux/reduxTypes/PostActionType";
+import Avatar from "./Avatar";
+import { MyContainer } from "../styledComponents/container-el";
 
 interface UserContainerProps {
   children: React.ReactNode;
@@ -134,6 +131,29 @@ const UserContainer: React.FC<UserContainerProps> = ({ children }) => {
 };
 
 export default UserContainer;
+
+export const ProfileContainer = styled(MyContainer)`
+  @media (min-width: 600px) {
+    width: 100%;
+  }
+`;
+
+export const HorizontalLine = styled.div`
+  height: 0px;
+  width: 95%;
+  background-color: #ccc;
+  margin: 0 auto;
+  position: relative;
+  padding: 0 20px;
+
+  @media (min-width: 736px) {
+    height: 1px;
+  }
+
+  @media (min-width: 935px) {
+    width: 100%;
+  }
+`;
 
 const AccountWrapper = styled.div`
   display: grid;

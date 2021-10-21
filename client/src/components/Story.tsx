@@ -1,6 +1,27 @@
+import React from "react";
 import styled from "styled-components";
+import StoriesAPI from "../data/stories.json";
 
-export const HomeStoryContainer = styled.div`
+interface StoryProps {}
+
+const Story: React.FC<StoryProps> = () => {
+  return (
+    <HomeStoryContainer>
+      {StoriesAPI.map((story, index) => (
+        <StoryWrapper key={index}>
+          <ImgStoryWrapper>
+            <ImgStory src={story.image} alt="story" />
+          </ImgStoryWrapper>
+          <p>{story.username}</p>
+        </StoryWrapper>
+      ))}
+    </HomeStoryContainer>
+  );
+};
+
+export default Story;
+
+const HomeStoryContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: start;
@@ -11,7 +32,7 @@ export const HomeStoryContainer = styled.div`
   padding-right: 10px;
 `;
 
-export const StoryWrapper = styled.div`
+const StoryWrapper = styled.div`
   text-align: center;
   font-size: 12px;
   margin-left: 16px;

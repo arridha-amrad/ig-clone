@@ -1,5 +1,4 @@
 import React from "react";
-import MenuImg from "../../images/card/menu.svg";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -15,7 +14,8 @@ const PostAuthor: React.FC<PostAuthorProps> = ({ avatar, username }) => {
         <AuthorImg src={avatar} alt="profile" />
         <AuthorUsername to="/home">{username}</AuthorUsername>
       </AuthorWrapper>
-      <AuthorOptions src={MenuImg} alt="menu" />
+      {/* <AuthorOptions src={MenuImg} alt="menu" /> */}
+      <Icon className="fas fa-ellipsis-h"></Icon>
     </AuthorContainer>
   );
 };
@@ -31,10 +31,9 @@ const AuthorContainer = styled.div`
   padding: 10px 20px;
 `;
 
-const AuthorOptions = styled.img`
+const Icon = styled.i`
   height: 15px;
   width: 15px;
-  object-fit: cover;
   cursor: pointer;
 `;
 
