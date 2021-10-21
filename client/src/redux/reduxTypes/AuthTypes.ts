@@ -13,8 +13,10 @@ export const REDIRECT_TO_LOGIN = "REDIRECT_TO_LOGIN";
 export const AUTHENTICATED_USER_DATA = "AUTHENTICATED_USER_DATA";
 export const UPDATE_USER_DATA = "UPDATE_USER_DATA";
 export const UPLOAD_AVATAR = "UPLOAD_AVATAR";
+export const UNSET_BLOCKED = "UNSET_BLOCKED";
 
 export type AuthActionsType =
+  | { type: typeof UNSET_BLOCKED }
   | { type: typeof UPLOAD_AVATAR; payload: string }
   | { type: typeof AUTHENTICATED_USER_DATA; payload: AuthenticatedUserData }
   | { type: typeof UPDATE_USER_DATA; payload: Partial<AuthenticatedUserData> }

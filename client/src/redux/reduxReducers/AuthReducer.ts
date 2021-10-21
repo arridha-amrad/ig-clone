@@ -43,6 +43,11 @@ const AuthReducer = (
   action: AuthActionsType
 ): AuthState => {
   switch (action.type) {
+    case "UNSET_BLOCKED":
+      return {
+        ...state,
+        isBlocked: false,
+      };
     case "UPLOAD_AVATAR":
       return {
         ...state,
@@ -79,7 +84,6 @@ const AuthReducer = (
         ...state,
         isAuthenticated: true,
         loadingAuth: false,
-        isBlocked: false,
       };
     case "LOADING_AUTH":
       return {
@@ -97,7 +101,6 @@ const AuthReducer = (
         requestStatus: true,
         loadingAuth: false,
         isAuthenticated: true,
-        isBlocked: false,
       };
     case "AUTH_SUCCESS":
       return {
@@ -115,7 +118,6 @@ const AuthReducer = (
       return {
         ...state,
         isAuthenticated: false,
-        isBlocked: false,
       };
     case "LOGOUT":
       return {

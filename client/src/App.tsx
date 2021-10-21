@@ -25,10 +25,9 @@ import { useDispatch } from "react-redux";
 import { getLoginUserData } from "./redux/reduxActions/AuthActions";
 import Loading from "./components/Loading";
 import {
-  LOADING_AUTH,
   SET_AUTHENTICATED,
   SET_UNAUTHENTICATED,
-  STOP_LOADING_AUTH,
+  UNSET_BLOCKED,
 } from "./redux/reduxTypes/AuthTypes";
 import SecureRoute from "./components/SecureRoute";
 import CreateNewPost from "./pages/CreateNewPost";
@@ -70,9 +69,11 @@ const App: React.FC<AppProps> = () => {
         })
         .finally(() => {
           setLoading(false);
+          dispatch({ type: UNSET_BLOCKED });
         });
     } else {
       setLoading(false);
+      dispatch({ type: UNSET_BLOCKED });
     }
     return function cleanup() {
       mounted = false;

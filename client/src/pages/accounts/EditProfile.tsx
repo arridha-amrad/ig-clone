@@ -15,7 +15,7 @@ interface EditProfileProps {}
 const EditProfile: React.FC<EditProfileProps> = () => {
   document.title = "Edit Profile - Instagram";
 
-  const { authenticatedUser, loadingAuth, isBlocked } = useSelector(
+  const { authenticatedUser, isBlocked } = useSelector(
     (state: RootState) => state.auth
   );
 
@@ -24,28 +24,28 @@ const EditProfile: React.FC<EditProfileProps> = () => {
   const dispatch = useDispatch();
 
   const [states, setStates] = useState<EditProfileData>({
-    email: "",
-    username: "",
-    fullName: "",
-    website: "",
-    bio: "",
-    phoneNumber: "",
-    gender: "",
+    email: authenticatedUser.email,
+    username: authenticatedUser.username,
+    fullName: authenticatedUser.fullName,
+    website: authenticatedUser.website,
+    bio: authenticatedUser.bio,
+    phoneNumber: authenticatedUser.phoneNumber,
+    gender: authenticatedUser.gender,
   });
 
-  useEffect(() => {
-    setStates({
-      ...states,
-      email: authenticatedUser.email,
-      username: authenticatedUser.username,
-      fullName: authenticatedUser.fullName,
-      website: authenticatedUser.website,
-      bio: authenticatedUser.bio,
-      phoneNumber: authenticatedUser.phoneNumber,
-      gender: authenticatedUser.gender,
-    });
-    // eslint-disable-next-line
-  }, []);
+  // useEffect(() => {
+  //   setStates({
+  //     ...states,
+  //     email: authenticatedUser.email,
+  //     username: authenticatedUser.username,
+  //     fullName: authenticatedUser.fullName,
+  //     website: authenticatedUser.website,
+  //     bio: authenticatedUser.bio,
+  //     phoneNumber: authenticatedUser.phoneNumber,
+  //     gender: authenticatedUser.gender,
+  //   });
+  //   // eslint-disable-next-line
+  // }, []);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -64,7 +64,7 @@ const EditProfile: React.FC<EditProfileProps> = () => {
   const { email, username, fullName, website, phoneNumber, bio, gender } =
     states;
 
-  return loadingAuth && isBlocked ? (
+  return isBlocked && email === "" ? (
     <></>
   ) : (
     <AccountContainer>
