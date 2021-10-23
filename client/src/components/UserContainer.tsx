@@ -17,218 +17,211 @@ import Avatar from "./Avatar";
 import { MyContainer } from "../styledComponents/container-el";
 
 interface UserContainerProps {
-  children: React.ReactNode;
+   children: React.ReactNode;
 }
 
 const UserContainer: React.FC<UserContainerProps> = ({ children }) => {
-  const [userData, setUserData] = useState<ProfilePageData>({
-    bio: "",
-    username: "",
-    isAuthenticatedUser: false,
-    followers: 0,
-    followings: 0,
-    fullName: "",
-    website: "",
-    imageURL: "",
-    posts: [],
-  });
+   const [userData, setUserData] = useState<ProfilePageData>({
+      bio: "",
+      username: "",
+      isAuthenticatedUser: false,
+      followers: 0,
+      followings: 0,
+      fullName: "",
+      website: "",
+      imageURL: "",
+      posts: [],
+   });
 
-  const [loading, setLoading] = useState(false);
+   const [loading, setLoading] = useState(false);
 
-  const params = useParams<{ username: string }>();
+   const params = useParams<{ username: string }>();
 
-  const { authenticatedUser, isBlocked } = useSelector(
-    (state: RootState) => state.auth
-  );
+   const { authenticatedUser, isBlocked } = useSelector((state: RootState) => state.auth);
 
-  const dispatch = useDispatch();
+   const dispatch = useDispatch();
 
-  useEffect(() => {
-    let mounted = true;
-    setLoading(true);
-    if (!isBlocked) {
-      axiosInstance
-        .get(`/user/${params.username}`)
-        .then((res: AxiosResponse<ProfilePageData>) => {
-          if (mounted) {
-            setUserData({
-              ...userData,
-              ...res.data,
-              posts: res.data.posts,
-            });
-            dispatch({ type: LOADING_POST });
-            dispatch({
-              type: SET_POSTS,
-              payload: res.data.posts,
-            });
-          }
-        })
-        .catch((err) => console.log(err))
-        .finally(() => setLoading(false));
-    }
-    return function cleanup() {
-      mounted = false;
-    };
-    // eslint-disable-next-line
-  }, [location.pathname]);
+   useEffect(() => {
+      let mounted = true;
+      setLoading(true);
+      if (!isBlocked) {
+         axiosInstance
+            .get(`/user/${params.username}`)
+            .then((res: AxiosResponse<ProfilePageData>) => {
+               if (mounted) {
+                  setUserData({
+                     ...userData,
+                     ...res.data,
+                     posts: res.data.posts,
+                  });
+                  dispatch({ type: LOADING_POST });
+                  dispatch({
+                     type: SET_POSTS,
+                     payload: res.data.posts,
+                  });
+               }
+            })
+            .catch((err) => console.log(err))
+            .finally(() => setLoading(false));
+      }
+      return function cleanup() {
+         mounted = false;
+      };
+      // eslint-disable-next-line
+   }, [location.pathname]);
 
-  if (loading) {
-    return <Loading />;
-  } else {
-    return (
-      <>
-        <MainWrapper>
-          <ProfileContainer>
-            <Header>
-              <AccountWrapper>
-                <Avatar
-                  username={userData.username}
-                  imageURL={userData.imageURL}
-                />
-                <AccountDataWrapper>
-                  <AccountData
-                    isAuthenticatedUser={
-                      userData.username === authenticatedUser.username
-                    }
-                    data={userData}
-                  />
-                </AccountDataWrapper>
-              </AccountWrapper>
+   if (loading) {
+      return <Loading />;
+   } else {
+      return (
+         <>
+            <MainWrapper>
+               <ProfileContainer>
+                  <Header>
+                     <AccountWrapper>
+                        <Avatar username={userData.username} imageURL={userData.imageURL} />
+                        <AccountDataWrapper>
+                           <AccountData
+                              isAuthenticatedUser={userData.username === authenticatedUser.username}
+                              data={userData}
+                           />
+                        </AccountDataWrapper>
+                     </AccountWrapper>
 
-              {/* This line appears for min-width 736px */}
-              <AccountWrapper2>
-                <Name>{userData.fullName}</Name>
-                <Bio>{userData.bio}</Bio>
-                <Web>{userData.website}</Web>
-              </AccountWrapper2>
+                     {/* This line appears for min-width 736px */}
+                     <AccountWrapper2>
+                        <Name>{userData.fullName}</Name>
+                        <Bio>{userData.bio}</Bio>
+                        <Web>{userData.website}</Web>
+                     </AccountWrapper2>
 
-              <PostFollowerFollowingArea2>
-                <PostFoll2>
-                  <Total2>{userData.posts.length}</Total2>
-                  <Menu2>Posts</Menu2>
-                </PostFoll2>
-                <PostFoll2>
-                  <Total2>{userData.followers}</Total2>
-                  <Menu2>Followers</Menu2>
-                </PostFoll2>
-                <PostFoll2>
-                  <Total2>{userData.followings}</Total2>
-                  <Menu2>Followings</Menu2>
-                </PostFoll2>
-              </PostFollowerFollowingArea2>
-              {/* This line appears for min-width 736px */}
-            </Header>
+                     <PostFollowerFollowingArea2>
+                        <PostFoll2>
+                           <Total2>{userData.posts.length}</Total2>
+                           <Menu2>Posts</Menu2>
+                        </PostFoll2>
+                        <PostFoll2>
+                           <Total2>{userData.followers}</Total2>
+                           <Menu2>Followers</Menu2>
+                        </PostFoll2>
+                        <PostFoll2>
+                           <Total2>{userData.followings}</Total2>
+                           <Menu2>Followings</Menu2>
+                        </PostFoll2>
+                     </PostFollowerFollowingArea2>
+                     {/* This line appears for min-width 736px */}
+                  </Header>
 
-            <HorizontalLine />
-            <ProfileMenus data={userData} />
-            {children}
-            <UserFooter />
-          </ProfileContainer>
-        </MainWrapper>
-      </>
-    );
-  }
+                  <HorizontalLine />
+                  <ProfileMenus data={userData} />
+                  {children}
+                  <UserFooter />
+               </ProfileContainer>
+            </MainWrapper>
+         </>
+      );
+   }
 };
 
 export default UserContainer;
 
 export const ProfileContainer = styled(MyContainer)`
-  @media (min-width: 600px) {
-    width: 100%;
-  }
+   @media (min-width: 600px) {
+      width: 100%;
+   }
 `;
 
 export const HorizontalLine = styled.div`
-  height: 0px;
-  width: 95%;
-  background-color: #ccc;
-  margin: 0 auto;
-  position: relative;
-  padding: 0 20px;
+   height: 0px;
+   width: 95%;
+   background-color: #ccc;
+   margin: 0 auto;
+   position: relative;
+   padding: 0 20px;
 
-  @media (min-width: 736px) {
-    height: 1px;
-  }
+   @media (min-width: 736px) {
+      height: 1px;
+   }
 
-  @media (min-width: 935px) {
-    width: 100%;
-  }
+   @media (min-width: 935px) {
+      width: 100%;
+   }
 `;
 
 const AccountWrapper = styled.div`
-  display: grid;
-  width: 100%;
-  grid-template-columns: 1fr 5fr;
-  padding: 20px 20px;
+   display: grid;
+   width: 100%;
+   grid-template-columns: 1fr 5fr;
+   padding: 20px 20px;
 
-  @media (min-width: 736px) {
-    grid-template-columns: 2fr 4fr;
-    padding: 0 0;
-  }
+   @media (min-width: 736px) {
+      grid-template-columns: 2fr 4fr;
+      padding: 0 0;
+   }
 `;
 
 const AccountWrapper2 = styled.div`
-  margin: 0px 20px 20px;
-  display: block;
+   margin: 0px 20px 20px;
+   display: block;
 
-  @media (min-width: 736px) {
-    display: none;
-  }
+   @media (min-width: 736px) {
+      display: none;
+   }
 `;
 
 const Name = styled.p`
-  font-weight: 600;
-  line-height: 1.9;
-  display: block;
+   font-weight: 600;
+   line-height: 1.9;
+   display: block;
 `;
 
 const Bio = styled.p`
-  line-height: 1.6;
-  display: block;
+   line-height: 1.6;
+   display: block;
 `;
 
 const Web = styled.p`
-  font-weight: 600;
-  color: #00376b;
-  display: block;
+   font-weight: 600;
+   color: #00376b;
+   display: block;
 `;
 
 const AccountDataWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+   display: flex;
+   flex-direction: column;
+   height: 100%;
 `;
 
 const Header = styled.div`
-  margin-bottom: 0;
-  @media (min-width: 736px) {
-    margin-bottom: 44px;
-  }
+   margin-bottom: 0;
+   @media (min-width: 736px) {
+      margin-bottom: 44px;
+   }
 `;
 
 const PostFollowerFollowingArea2 = styled.div`
-  height: 61px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  border: 1px solid #dbdbdb;
+   height: 61px;
+   width: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: space-around;
+   border: 1px solid #dbdbdb;
 
-  @media (min-width: 736px) {
-    display: none;
-  }
+   @media (min-width: 736px) {
+      display: none;
+   }
 `;
 
 const PostFoll2 = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
 `;
 
 const Total2 = styled.p`
-  font-weight: 700;
+   font-weight: 700;
 `;
 
 const Menu2 = styled.p`
-  color: #8e8e8e;
+   color: #8e8e8e;
 `;

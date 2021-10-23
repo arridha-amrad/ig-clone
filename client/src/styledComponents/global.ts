@@ -32,7 +32,6 @@ export const GlobalStyles = createGlobalStyle`
     font-family: --apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     color: #1a1a1b;
     font-size: 14px;
-    background-color: ${(props) => props.theme.bg};
   }
 
   textarea {
