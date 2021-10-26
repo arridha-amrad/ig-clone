@@ -3,25 +3,34 @@ import AccountData from "./UserInfo";
 import ProfileMenus from "./PostMenu";
 import UserFooter from "./UserFooter";
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/Store";
-import { useDispatch } from "react-redux";
-import { ProfilePageData } from "../dto/UserDTO";
+import { PostData } from "../dto/UserDTO";
 import MainWrapper from "./MainWrapper";
 import Loading from "./Loading";
 import { useParams } from "react-router-dom";
 import axiosInstance from "../utils/AxiosInterceptors";
-import { AxiosResponse } from "axios";
-import { LOADING_POST, SET_POSTS } from "../redux/reduxTypes/PostActionType";
 import Avatar from "./Avatar";
 import { MyContainer } from "../styledComponents/container-el";
+import { SET_POSTS } from "../redux/reduxTypes/PostActionType";
 
 interface UserContainerProps {
    children: React.ReactNode;
 }
 
+export interface IUserData {
+   bio: string;
+   username: string;
+   isAuthenticatedUser: boolean;
+   followers: number;
+   followings: number;
+   fullName: string;
+   website: string;
+   imageURL: string;
+}
+
 const UserContainer: React.FC<UserContainerProps> = ({ children }) => {
-   const [userData, setUserData] = useState<ProfilePageData>({
+   const [userData, setUserData] = useState<IUserData>({
       bio: "",
       username: "",
       isAuthenticatedUser: false,
@@ -30,45 +39,47 @@ const UserContainer: React.FC<UserContainerProps> = ({ children }) => {
       fullName: "",
       website: "",
       imageURL: "",
-      posts: [],
    });
+
+   const [posts, setPosts] = useState<PostData[]>([]);
 
    const [loading, setLoading] = useState(false);
 
    const params = useParams<{ username: string }>();
 
-   const { authenticatedUser, isBlocked } = useSelector((state: RootState) => state.auth);
+   const { authenticatedUser } = useSelector((state: RootState) => state.auth);
 
    const dispatch = useDispatch();
 
    useEffect(() => {
       let mounted = true;
       setLoading(true);
-      if (!isBlocked) {
-         axiosInstance
-            .get(`/user/${params.username}`)
-            .then((res: AxiosResponse<ProfilePageData>) => {
-               if (mounted) {
-                  setUserData({
-                     ...userData,
-                     ...res.data,
-                     posts: res.data.posts,
-                  });
-                  dispatch({ type: LOADING_POST });
-                  dispatch({
-                     type: SET_POSTS,
-                     payload: res.data.posts,
-                  });
-               }
-            })
-            .catch((err) => console.log(err))
-            .finally(() => setLoading(false));
+      async function fetchUserAndPosts() {
+         try {
+            const res = await axiosInstance.get(`/user/${params.username}`);
+            if (mounted) {
+               setUserData({
+                  ...userData,
+                  ...res.data.user,
+               });
+               setPosts(res.data.posts);
+               dispatch({
+                  type: SET_POSTS,
+                  payload: res.data.posts,
+               });
+               setLoading(false);
+            }
+         } catch (err) {
+            console.log(err);
+            setLoading(false);
+         }
       }
+      fetchUserAndPosts();
       return function cleanup() {
          mounted = false;
       };
       // eslint-disable-next-line
-   }, [location.pathname]);
+   }, [params.username]);
 
    if (loading) {
       return <Loading />;
@@ -83,7 +94,8 @@ const UserContainer: React.FC<UserContainerProps> = ({ children }) => {
                         <AccountDataWrapper>
                            <AccountData
                               isAuthenticatedUser={userData.username === authenticatedUser.username}
-                              data={userData}
+                              userData={userData}
+                              postsData={posts}
                            />
                         </AccountDataWrapper>
                      </AccountWrapper>
@@ -97,7 +109,7 @@ const UserContainer: React.FC<UserContainerProps> = ({ children }) => {
 
                      <PostFollowerFollowingArea2>
                         <PostFoll2>
-                           <Total2>{userData.posts.length}</Total2>
+                           <Total2>{posts.length}</Total2>
                            <Menu2>Posts</Menu2>
                         </PostFoll2>
                         <PostFoll2>

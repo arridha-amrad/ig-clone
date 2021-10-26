@@ -2,6 +2,7 @@ import { useRef, useState, useEffect, FormEvent, ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import styled from "styled-components";
+import MainWrapper from "../components/MainWrapper";
 import { LOADING_POST, STOP_LOADING_POST } from "../redux/reduxTypes/PostActionType";
 import { RootState } from "../redux/Store";
 import axiosInstance from "../utils/AxiosInterceptors";
@@ -37,49 +38,52 @@ const CreateNewPost = () => {
       }
    }, [image]);
 
-   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       const formData = new FormData();
       if (image) {
          formData.append("imageFile", image);
          formData.append("description", description);
          dispatch({ type: LOADING_POST });
-         axiosInstance
-            .post("/post", formData, {
+         try {
+            const res = await axiosInstance.post("/post", formData, {
                headers: { "Content-Type": "multipart/form-data" },
-            })
-            .then((res) => {
-               if (res.status === 200) {
-                  history.push(`/${authenticatedUser.username}`);
-               }
-            })
-            .catch((err) => console.log(err))
-            .finally(() => dispatch({ type: STOP_LOADING_POST }));
+            });
+            if (res.status === 200) {
+               history.push(`/${authenticatedUser.username}`);
+            }
+         } catch (err) {
+            console.log(err);
+         } finally {
+            dispatch({ type: STOP_LOADING_POST });
+         }
       }
    };
 
    return (
-      <Container>
-         <form onSubmit={handleSubmit}>
-            <ImagePreviewWrapper onClick={() => fileRef.current?.click()}>
-               {preview !== "" ? <Image src={preview} alt="post" /> : "Add Image"}
-               <input
-                  ref={fileRef}
-                  hidden={true}
-                  name="imageFile"
-                  type="file"
-                  accept="image/*"
-                  onChange={handleFileChange}
+      <MainWrapper>
+         <Container>
+            <form onSubmit={handleSubmit}>
+               <ImagePreviewWrapper onClick={() => fileRef.current?.click()}>
+                  {preview !== "" ? <Image src={preview} alt="post" /> : "Add Image"}
+                  <input
+                     ref={fileRef}
+                     hidden={true}
+                     name="imageFile"
+                     type="file"
+                     accept="image/*"
+                     onChange={handleFileChange}
+                  />
+               </ImagePreviewWrapper>
+               <PostDescription
+                  value={description}
+                  onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)}
+                  placeholder="description..."
                />
-            </ImagePreviewWrapper>
-            <PostDescription
-               value={description}
-               onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)}
-               placeholder="description..."
-            />
-            <Button disabled={!image || loadingPost}>{loadingPost ? "loading..." : "Submit"}</Button>
-         </form>
-      </Container>
+               <Button disabled={!image || loadingPost}>{loadingPost ? "loading..." : "Submit"}</Button>
+            </form>
+         </Container>
+      </MainWrapper>
    );
 };
 export default CreateNewPost;

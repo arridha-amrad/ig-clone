@@ -11,11 +11,7 @@ const AuthAppBar: React.FC<AuthAppBarProps> = () => {
          <NavContainer>
             <div>
                <Link to="/">
-                  <img
-                     src={IGText}
-                     style={{ height: "30px" }}
-                     alt="instagram"
-                  />
+                  <img src={IGText} style={{ height: "30px" }} alt="instagram" />
                </Link>
             </div>
          </NavContainer>

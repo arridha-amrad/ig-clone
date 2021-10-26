@@ -22,12 +22,7 @@ import Home from "./pages/Home";
 import axiosInstance from "./utils/AxiosInterceptors";
 import { useDispatch } from "react-redux";
 import Loading from "./components/Loading";
-import {
-   AUTHENTICATED_USER_DATA,
-   SET_AUTHENTICATED,
-   SET_UNAUTHENTICATED,
-   UNSET_BLOCKED,
-} from "./redux/reduxTypes/AuthTypes";
+import { AUTHENTICATED_USER_DATA, SET_AUTHENTICATED, SET_UNAUTHENTICATED } from "./redux/reduxTypes/AuthTypes";
 import SecureRoute from "./components/SecureRoute";
 import CreateNewPost from "./pages/CreateNewPost";
 import PostDetail from "./pages/PostDetail";
@@ -51,17 +46,13 @@ const App = () => {
                   dispatch({ type: SET_AUTHENTICATED });
                }
             } catch (err) {
-               dispatch({ type: SET_UNAUTHENTICATED });
                console.log(err);
+               dispatch({ type: SET_UNAUTHENTICATED });
             } finally {
                setLoading(false);
-               dispatch({ type: UNSET_BLOCKED });
             }
          }
          refreshToken();
-      } else {
-         setLoading(false);
-         dispatch({ type: UNSET_BLOCKED });
       }
       return function cleanup() {
          mounted = false;

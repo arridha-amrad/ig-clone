@@ -108,6 +108,7 @@ export const login = (loginData: LoginData) => async (dispatch: Dispatch<AuthMes
          type: "AUTHENTICATED_USER_DATA",
          payload: res.data,
       });
+      dispatch({ type: "UNSET_BLOCKED" });
       localStorage.setItem("data", "login");
    } catch (err: any) {
       dispatch({
