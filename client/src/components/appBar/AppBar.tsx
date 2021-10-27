@@ -62,14 +62,22 @@ const AppBar: React.FC<AppBarProps> = () => {
                </NavArea>
             </NavContainer>
          </Nav>
+         <Space />
       </>
    );
 };
 
 export default AppBar;
 
+const Space = styled.div`
+   height: calc(52px + 3.5rem);
+   width: 100%;
+`;
+
 export const Nav = styled.div`
+   position: fixed;
    height: 52px;
+   margin-bottom: 52px;
    width: 100vw;
    background: #fff;
    display: flex;
@@ -77,7 +85,6 @@ export const Nav = styled.div`
    align-items: center;
    border-bottom: 1px solid #ccc;
    z-index: 90;
-   margin-bottom: 50px;
 `;
 
 const NavArea = styled.div`
