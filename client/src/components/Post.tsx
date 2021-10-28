@@ -40,7 +40,7 @@ const Description = styled.div`
 `;
 
 const PostImage = styled.img`
-   background-color: #cecece;
+   background-color: #1a1a1a;
    height: auto;
    max-height: 500px;
    max-width: 100%;

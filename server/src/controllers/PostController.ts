@@ -71,6 +71,9 @@ export const createPost = async (
    const { description } = req.body;
    try {
       if (imageFile) {
+         if (imageFile.size >= 2000000) {
+            next(new Exception(HTTP_CODE.BAD_REQUEST, 'file too large'));
+         }
          const uploadResult = await uploadToCloudinary(imageFile, false);
          if (uploadResult) {
             const newPost = await PostService.save({

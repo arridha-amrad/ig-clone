@@ -77,7 +77,6 @@ const Space = styled.div`
 export const Nav = styled.div`
    position: fixed;
    height: 52px;
-   margin-bottom: 52px;
    width: 100vw;
    background: #fff;
    display: flex;

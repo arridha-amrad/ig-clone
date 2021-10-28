@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router";
 import styled from "styled-components";
 import MainWrapper from "../components/MainWrapper";
+import MyAlert from "../components/MyAlert";
 import { LOADING_POST, STOP_LOADING_POST } from "../redux/reduxTypes/PostActionType";
 import { RootState } from "../redux/Store";
 import axiosInstance from "../utils/AxiosInterceptors";
@@ -16,6 +17,7 @@ const CreateNewPost = () => {
    const { loadingPost } = useSelector((state: RootState) => state.post);
    const { authenticatedUser } = useSelector((state: RootState) => state.auth);
    const history = useHistory();
+   const [error, setError] = useState("");
 
    const handleFileChange = (e: any) => {
       const file = e.target?.files[0];
@@ -52,8 +54,9 @@ const CreateNewPost = () => {
             if (res.status === 200) {
                history.push(`/${authenticatedUser.username}`);
             }
-         } catch (err) {
+         } catch (err: any) {
             console.log(err);
+            setError(err.response.data.message);
          } finally {
             dispatch({ type: STOP_LOADING_POST });
          }
@@ -80,7 +83,8 @@ const CreateNewPost = () => {
                   onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)}
                   placeholder="description..."
                />
-               <Button disabled={!image || loadingPost}>{loadingPost ? "loading..." : "Submit"}</Button>
+               <Button disabled={!image || loadingPost}>{loadingPost ? "uploading..." : "Submit"}</Button>
+               {error !== "" && <MyAlert message={error} type="danger" />}
             </form>
          </Container>
       </MainWrapper>
@@ -98,7 +102,7 @@ const Image = styled.img`
 const Container = styled.div`
    width: 500px;
    height: 100%;
-   margin: 2rem auto;
+   margin: 0 auto;
 `;
 
 const ImagePreviewWrapper = styled.div`

@@ -29,8 +29,8 @@ export const uploadToCloudinary = async (
       uploadResult = await cloudinary.uploader.upload(
          file.tempFilePath,
          {
-            width: 300,
-            height: 300,
+            width: 200,
+            height: 200,
             crop: 'thumb',
             gravity: 'face',
          },
